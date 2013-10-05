@@ -37,8 +37,10 @@ if (isset($_SERVER['HTTP_CYCLEATL_PROTOCOL_VERSION'])) {
   $version = intval($_SERVER['HTTP_CYCLEATL_PROTOCOL_VERSION']);
 } elseif (isset($_GET['version'])) {
   $version = intval($_GET['version']);
-} else {
+} elseif (isset($_POST['version'])) {
   $version = intval($_POST['version']);
+} else {
+  $version = null;
 }
 
 Util::log ( "protocol version: {$version}");
