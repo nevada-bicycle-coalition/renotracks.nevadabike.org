@@ -57,11 +57,12 @@ if ( $version == PROTOCOL_VERSION_1 || $version == PROTOCOL_VERSION_2 || $versio
 
 // new zipped body, still mostly urlencoded form
 elseif ( $version == PROTOCOL_VERSION_3) {
+  $raw_data = file_get_contents( 'php://input' );
   if ($_SERVER['HTTP_CONTENT_ENCODING'] == 'gzip' ||
       $_SERVER['HTTP_CONTENT_ENCODING'] == 'zlib') {
-    $body = decompress_zlib($HTTP_RAW_POST_DATA);
+    $body = decompress_zlib($raw_data);
   } else {
-    $body = $HTTP_RAW_POST_DATA;
+    $body = $raw_data;
   }
   $query_vars = array();
   parse_str($body, $query_vars);
