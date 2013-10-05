@@ -1,0 +1,7 @@
+# So terrible, but necessary?
+php_value include_path ".:../include:../../include:../../../include"
+
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^renotracks.hp.af.com$ [NC,OR]
+RewriteCond %{REQUEST_URI} !www/
+RewriteRule (.*) /www/$1 [L]
