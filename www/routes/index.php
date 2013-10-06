@@ -1,3 +1,10 @@
+<?php
+if ( isset( $_GET['id'] ) )
+	$config = array( 'tripId' => intval( $_GET['id'] ), 'tripNum' => 1 );
+else
+	$config = array( 'tripNum' => 10 );
+$config_json = json_encode( $config );
+?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>
 <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -83,9 +90,7 @@
 
 <script type="text/javascript">
 	(function () {
-		Trips.init( {
-			loadNum: 5
-		} );
+		Trips.init( <?php echo $config_json; ?> );
 	})();
 </script>
 </body>

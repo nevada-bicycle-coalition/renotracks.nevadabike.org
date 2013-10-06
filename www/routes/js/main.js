@@ -28,8 +28,17 @@ function toggleTiles (){
 var Trips ={
 	init: function(config) {
 		this.trip_count = 1;
-		this.config =config;
-	 	this.trips = this.fetchTrips();	 	
+		this.config = config;
+		if (config.tripId) {
+			this.trips = [ config.tripId ];
+			this.config.lineWeight = 5;
+			this.config.lineOpacity = 0.9;
+			Trips.fetchData( config.tripId );
+		} else {
+			this.config.lineWeight = 2;
+			this.config.lineOpacity = 0.2;
+			this.trips = this.fetchTrips();
+		}
 	},
 	fetchTrips: function(query) {
 		var self = Trips;
@@ -79,7 +88,7 @@ var Trips ={
 			latlng = new L.LatLng(self.latitude,self.longitude);
 			latlngs.push(latlng);
 		});	
-		polyline = L.polyline(latlngs, {color: 'red', weight: 1, opacity: .1}).addTo(map);
+		polyline = L.polyline(latlngs, {color: 'red', weight: this.config.lineWeight, opacity: this.config.lineOpacity}).addTo(map);
 		$('.trip_count').text(this.trip_count++);
 	}
 }
