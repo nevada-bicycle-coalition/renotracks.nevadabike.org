@@ -8,7 +8,7 @@ var map = L.map('mapBody', {
 var stamenUrl = 'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png';
 var stamenAttribution = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.';
 
-var mapTileLayer = new L.TileLayer(stamenUrl, {maxZoom: 18, attribution: stamenAttribution});
+var mapTileLayer = new L.TileLayer(stamenUrl, {maxZoom: 18, attribution: stamenAttribution, opacity: 0.5 });
 map.addLayer(mapTileLayer);
 
 var tilesVisible = true;
