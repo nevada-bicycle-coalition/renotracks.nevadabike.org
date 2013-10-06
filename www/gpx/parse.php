@@ -16,12 +16,12 @@ if ( !is_readable( $_FILES['gpxfile']['tmp_name'] ) ) {
 	die();
 }
 $xml = simplexml_load_file( $_FILES['gpxfile']['tmp_name'] );
-if ( !xml ) {
+if ( !$xml ) {
 	echo 'Can\'t parse XML.';
 	die();
 }
 
-$start = $xml->trk[0]->trkseg[0]->trkpt[0]->time;
+$start = str_replace( array( 'T', 'Z' ), ' ', $xml->trk[0]->trkseg[0]->trkpt[0]->time );
 if ( ! $trip = TripFactory::insert( $_POST['user_id'], $_POST['purpose'], $_POST['notes'], $start ) ) {
 	echo "Trip creation failed.";
 	die();
