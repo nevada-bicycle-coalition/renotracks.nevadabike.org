@@ -10,7 +10,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>Visualizing Cycle Atlanta Data</title>
+	<title>Visualizing RenoTracks Data</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width">
 
@@ -54,7 +54,7 @@
 	<div class="navbar-inner">
 		<div class="container">
 
-			<p class="cycleAtl_title">Visualizing Cycle Atlanta Data.</p>
+			<p class="cycleAtl_title">Visualizing RenoTracks Data.</p>
 
 		</div>
 	</div>
@@ -67,7 +67,7 @@
 
 	<footer>
 		<p>Visualizing <span class="trip_count">n</span> of <span class="trip_total">m</span> trips collected by users
-			of the <a href="http://cycleatlanta.org">Cycle Atlanta apps</a>.</p>
+			of the <a href="/">RenoTracks apps</a>.</p>
 	</footer>
 
 </div>
