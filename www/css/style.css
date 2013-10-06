@@ -12,7 +12,7 @@ h1 {
 	font-weight: 600;
 	font-size: 42px;
 	padding: 5px;
-	color: rgb(13,85,135);
+	color: rgb(47,136,56);
 	margin: 0;
 }
 
@@ -21,7 +21,7 @@ h2{
 	font-weight: normal;
 	margin: -7;
 	font-size: 18px;
-	color: rgb(13,85,135);
+	color: rgb(47,136,56);
 	/* color: #7f7f7f; */
 	color: #666;
 	font-weight: 100;
@@ -32,9 +32,9 @@ h2{
 
 h3{
 	font-family: 'Myriad Pro', Verdana;
-	color: rgb(13,85,135);
+	color: rgb(47,136,56);
 	font-size: 20px;
-	line-height: 60%;
+	line-height: 90%;
 	margin-bottom: 0px;
 }
 
@@ -45,7 +45,7 @@ h3.android{
 
 h4{
 	font-family: 'Myriad Pro', Verdana;
-	color: rgb(13,85,135);
+	color: rgb(47,136,56);
 	font-size: 16px;
 	line-height: 60%;
 	margin-bottom: 15px;
@@ -54,7 +54,7 @@ h4{
 a:link {
 	font-weight: 400;
 	text-decoration: none;	
-	color: rgba(25,142,226,1);
+	color: rgb(47,136,56);
 }
 
 a:visited {
@@ -100,14 +100,14 @@ table.stayInTouch{
 
 p.lede{
 	font-size: 24px;
-	line-height: 2em;
+	line-height: 1.8em;
 	margin-top:10px;
 	margin-bottom:40px;
 }
 
 span.largeText{
 	font-size:48px;
-	color: rgb(13,85,135);
+	color: rgb(47,136,56);
 }
 
 #content{
@@ -286,7 +286,7 @@ table.storeIcons{
 .supportDocs a img {
 	text-align: center;
 	padding: 3px;
-	background-color: rgba(25,142,226,1);
+	background-color: rgb(47,136,56);
 }
 
 .supportDocs a:hover img {
