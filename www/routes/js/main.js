@@ -142,4 +142,5 @@ jQuery( '.btn.rtc' ).on( 'click', function() {
 			}
 		} );
 	});
-});
+} ).click();
+
