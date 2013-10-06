@@ -96,7 +96,7 @@ jQuery( '.btn.streets' ).button('toggle').on( 'click', function() {
 } );
 
 jQuery( '.btn.rtc' ).on( 'click', function() {
-	var rtc_url = "http://geocommons.com/datasets/400431/features.json?lat=" +
+	var rtc_url = "http://geocommons.com/datasets/402220/features.json?lat=" +
 		renoCenter.lat + "&amp;lon=" + renoCenter.lng + "&amp;radius=25&amp;callback=?";
 	var rtc_styles = {};
 	var rtc_groups = {};
