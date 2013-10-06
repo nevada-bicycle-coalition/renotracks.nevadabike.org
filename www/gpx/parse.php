@@ -21,7 +21,7 @@ if ( !$xml ) {
 	die();
 }
 
-$start = str_replace( array( 'T', 'Z' ), ' ', $xml->trk[0]->trkseg[0]->trkpt[0]->time );
+$start = $xml->trk[0]->trkseg[0]->trkpt[0]->time;
 if ( ! $trip = TripFactory::insert( $_POST['user_id'], $_POST['purpose'], $_POST['notes'], $start ) ) {
 	echo "Trip creation failed.";
 	die();
