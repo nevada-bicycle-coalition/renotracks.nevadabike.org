@@ -46,5 +46,11 @@ foreach( $xml->trk as $trk ) {
 	}
 }
 
+if ( ! $updatedTrip = TripFactory::update( $trip->id, $stop, $count ) ) {
+	echo 'Got everything but the stop time and point count:';
+	var_dump( $updatedTrip );
+	die();
+}
+
 header( 'Location: ../routes/?id=' . $trip->id );
 
