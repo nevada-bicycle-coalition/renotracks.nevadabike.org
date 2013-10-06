@@ -35,7 +35,7 @@ $config_json = json_encode( $config );
 	<!--         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script> -->
 	<script type="text/javascript">
 		var _gaq = _gaq || [];
-		_gaq.push( ['_setAccount', 'UA-35489732-1'] );
+		_gaq.push( ['_setAccount', ''] );
 		_gaq.push( ['_trackPageview'] );
 
 		(function () {
@@ -61,14 +61,17 @@ $config_json = json_encode( $config );
 	<div class="navbar-inner">
 		<div class="container">
 
-			<p class="cycleAtl_title">Visualizing RenoTracks Data.</p>
+			<p class="cycleAtl_title">Visualize RenoTracks Data</p>
 
 		</div>
 	</div>
 </div>
 
 <div class="container">
-	<div id="controls"><a href="#" class="tileToggle" onclick="toggleTiles();">Hide</a> streets</div>
+	<button type="button" data-toggle="button" class="btn streets">Streets</button>
+	<div class="btn-group">
+		<button type="button" class="btn rtc">Bike Lanes and More</button>
+	</div>
 	<div id="mapBody"></div>
 	<hr>
 
