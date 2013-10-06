@@ -39,8 +39,9 @@ $users = $db->query( "SELECT * FROM user" );
 				<option>School</option>
 				<option>Work</option>
 				<option>Recreation</option>
-				<option>Errands</option>
-				<option>Other</option>
+				<option>Errand</option>
+				<option>Exercise</option>
+				<option>other</option>
 			</select>
 		</p>
 
