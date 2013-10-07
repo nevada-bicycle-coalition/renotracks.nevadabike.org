@@ -9,7 +9,7 @@ var map = L.map('mapBody', {
 var stamenUrl = 'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png';
 var stamenAttribution = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.';
 
-var mapTileLayer = new L.TileLayer(stamenUrl, {maxZoom: 18, attribution: stamenAttribution, opacity: 0.5 });
+var mapTileLayer = new L.TileLayer(stamenUrl, {maxZoom: 18, attribution: stamenAttribution, opacity: 0.4 });
 map.addLayer(mapTileLayer);
 
 var tilesVisible = true;
@@ -121,9 +121,9 @@ jQuery( '.btn.rtc' ).on( 'click', function() {
 			onEachFeature: function( feature, layer ) {
 				if ( !rtc_groups[feature.properties.Type] ) {
 					rtc_groups[feature.properties.Type] = new L.layerGroup();
-					rtc_groups[feature.properties.Type].addTo( map );
+					rtc_groups[feature.properties.Type];
 					$buttonGroup.append(
-						jQuery( '<button type="button" class="btn active"></button>' )
+						jQuery( '<button type="button" class="btn"></button>' )
 							.text( feature.properties.Type )
 							.data( { type: feature.properties.Type } )
 							.css( 'color', rtc_styles[feature.properties.Type].color )
