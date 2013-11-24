@@ -27,7 +27,7 @@ $users = $db->query( "SELECT * FROM user" );
 		<p>
 			User:
 			<select name="user_id">
-				<?php while( $user = $users->fetch_object() ) : ?>
+				<?php while( $users and $user = $users->fetch_object() ) : ?>
 					<option value="<?php echo $user->id; ?>"><?php echo $user->id . ' ' . $user->email; ?></option>
 				<?php endwhile; ?>
 			</select>
