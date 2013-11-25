@@ -234,6 +234,3 @@ a {
   transform: translate3d(0, 0, 0);
   transition: all 0.33s cubic-bezier(0.694, 0.0482, 0.335, 1);
 }
-.global_content.on {
-  transform: translate3d(-220px, 0, 0);
-}
