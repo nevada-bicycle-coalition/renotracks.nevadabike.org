@@ -140,10 +140,10 @@ body {
   background: #eeeeee;
 }
 a {
-  color: #009039;
+  color: #2e8837;
 }
 .global_header {
-  background: #009039;
+  background: #2e8837;
   padding: 40px;
   color: #ffffff;
   text-align: center;
@@ -151,8 +151,8 @@ a {
   line-height: 1.6em;
 }
 .global_header .logo {
-  padding-bottom: 30px;
-  width: 140px;
+  padding-bottom: 0px;
+  width: 180px;
   height: auto;
 }
 .global_header p {
@@ -168,7 +168,7 @@ a {
   margin-bottom: 20px;
 }
 .global_body .column h2 {
-  color: #009039;
+  color: #2e8837;
   font-family: 'Libre Baskerville', serif;
   font-size: 22px;
   margin-bottom: 20px;
@@ -188,7 +188,7 @@ a {
   margin-bottom: 50px;
 }
 .global_more_details .row h2 {
-  color: #009039;
+  color: #2e8837;
   font-family: 'Libre Baskerville', serif;
   font-size: 22px;
   margin-bottom: 20px;
@@ -233,4 +233,9 @@ a {
   z-index: 2;
   transform: translate3d(0, 0, 0);
   transition: all 0.33s cubic-bezier(0.694, 0.0482, 0.335, 1);
+}
+
+.appStore {
+    width:180px;
+    padding:15px 0px 0px 0px;
 }
