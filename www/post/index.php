@@ -103,7 +103,7 @@ if ( is_string( $device ) && strlen( $device ) === 32 )
 			$noteObj = json_decode( $note );
 			
 			// get the first coord's start timestamp if needed
-			if ( !$timeStamp )
+			if ( empty( $timeStamp ) )
 				$timeStamp = $noteObj->r;
 			
 			// first check for existing note
