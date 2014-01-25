@@ -32,6 +32,12 @@ file { "/home/${::ssh_username}":
     owner  => $::ssh_username,
 }
 
+file { "/var/renotracks-uploads":
+  ensure => directory,
+  owner  => 'www-data',
+  mode   => 0755,
+}
+
 # copy dot files to ssh user's home directory
 exec { 'dotfiles':
   cwd     => "/home/${::ssh_username}",

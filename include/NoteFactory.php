@@ -4,7 +4,7 @@ require_once('Database.php');
 require_once('Note.php');
 require_once(dirname(__FILE__).'/pel/PelJpeg.php');
 
-define ('IMAGE_PATH', dirname( dirname( __FILE__ ) ) . '/uploads/' );
+define ('FALLBACK_IMAGE_PATH', '../uploads' );
 
 class NoteFactory
 {
@@ -44,16 +44,18 @@ class NoteFactory
 			Util::log("note type text: {$note_type_text}");
 			
 			//save the image
-			if (filesize($image_file)>0){		
-				if(move_uploaded_file($_FILES['file']['tmp_name'], IMAGE_PATH . $image_url . ".jpg")) {
+			if (filesize($image_file)>0){
+				$image_path = getenv( 'RT_UPLOAD_DIR' ) ?: FALLBACK_IMAGE_PATH;
+				$image_path .= '/';
+				if(move_uploaded_file($_FILES['file']['tmp_name'], $image_path . $image_url . ".jpg")) {
 					// Move succeed.
-					Util::log ("Image saved to ". IMAGE_PATH . $image_url . ".jpg");
+					Util::log ("Image saved to ". $image_path . $image_url . ".jpg");
 					//
 					$user_comment = $note_type_text . ": " . $details;
-					self::addGpsInfo(IMAGE_PATH . $image_url . ".jpg",IMAGE_PATH . $image_url . ".jpg", null, $user_comment, null, $longitude, $latitude, $altitude, $recorded );
+					self::addGpsInfo($image_path . $image_url . ".jpg",$image_path . $image_url . ".jpg", null, $user_comment, null, $longitude, $latitude, $altitude, $recorded );
 				} else {
 				    // Move failed. Possible duplicate?
-					Util::log ("WARNING: Image not saved ". IMAGE_PATH . $image_url . ".jpg");
+					Util::log ("WARNING: Image not saved ". $image_path . $image_url . ".jpg");
 				}
 			}
 			
