@@ -123,8 +123,8 @@ class UserFactory
 	public static function addEmail( $email )
 	{
 		$db = DatabaseConnectionFactory::getConnection();
-//		$query = "INSERT into email (email_address) VALUES ('".$db->escape_string( $email )."')";
-		$query = "INSERT into email (email_address) SELECT '".$db->escape_string( $email )."' FROM email WHERE email_address='".$db->escape_string( $email )."' HAVING COUNT(*)=0";
+		// Insert without duplicates
+		$query = "INSERT into email (email) SELECT '".$db->escape_string( $email )."' FROM email WHERE email='".$db->escape_string( $email )."' HAVING COUNT(*)=0";
 		if ( $db->query( $query ) ) 
 		{
 			Util::log( __METHOD__ . "() added email {$email}:" );
