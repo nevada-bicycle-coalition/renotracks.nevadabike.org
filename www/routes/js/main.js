@@ -39,7 +39,7 @@ var Trips ={
 			url: 'routeData.php',
 			type: 'POST',
 			data: {
-				t:'get_trip_ids',
+				t:'get_trip_ids'
 				}, 
 			dataType: 'json',
 			success: function(results) {
@@ -60,7 +60,7 @@ var Trips ={
 			type: 'POST',
 			data: {
 				q:query,
-				t:'get_coords_by_trip',
+				t:'get_coords_by_trip'
 				}, 
 			dataType: 'json',
 			success: function(results) {
