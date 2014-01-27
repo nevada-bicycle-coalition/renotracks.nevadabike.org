@@ -1,16 +1,22 @@
 // create the map content
 var renoCenter = new L.LatLng( 39.519933, -119.789643 );
 var map = L.map('mapBody', {
-    center: renoCenter,
-    zoom: 13
+	center: renoCenter,
+	zoom: 13
 });
 
-// add an OpenStreetMap tile layer
-var stamenUrl = 'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png';
-var stamenAttribution = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.';
-
-var mapTileLayer = new L.TileLayer(stamenUrl, {maxZoom: 18, attribution: stamenAttribution, opacity: 0.4 });
+var mapTileLayer = new L.TileLayer(
+	'http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+	{maxZoom: 19, attribution: 'Tiles: &copy; Esri' }
+);
 map.addLayer(mapTileLayer);
+
+map.addLayer(
+	new L.TileLayer(
+		'http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
+		{maxZoom: 19, attribution: 'Tiles: &copy; Esri' }
+	)
+);
 
 var tilesVisible = true;
 
@@ -91,7 +97,7 @@ jQuery( '.btn.streets' ).button('toggle').on( 'click', function() {
 	if ( $(this).hasClass( 'active' ) ) {
 		mapTileLayer.setOpacity(0);
 	} else {
-		mapTileLayer.setOpacity(0.5);
+		mapTileLayer.setOpacity(1);
 	}
 } );
 
