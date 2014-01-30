@@ -22,7 +22,7 @@ $config_json = json_encode( $config );
 	<meta name="viewport" content="width=device-width">
 
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.css"/>
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"/>
 	<style>
 		body {
 			padding-top: 60px;
@@ -85,7 +85,7 @@ $config_json = json_encode( $config );
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>window.jQuery || document.write( '<script src="js/vendor/jquery-1.8.3.min.js"><\/script>' )</script>
-<script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"></script>
+<script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
 
 <script src="js/vendor/bootstrap.min.js"></script>
 
