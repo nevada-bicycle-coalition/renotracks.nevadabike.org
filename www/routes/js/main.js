@@ -78,7 +78,8 @@ var Trips ={
 	},
 	attachPolyline: function() {
 		var latlng,
-			polyline;
+			polyline,
+			data = this.data;
 
 			latlngs = new Array();
 
@@ -87,7 +88,11 @@ var Trips ={
 			latlng = new L.LatLng(self.latitude,self.longitude);
 			latlngs.push(latlng);
 		});	
-		polyline = L.polyline(latlngs, {color: 'red', weight: this.config.lineWeight, opacity: this.config.lineOpacity}).addTo(map);
+		polyline = L.polyline(latlngs, {color: 'red', weight: this.config.lineWeight, opacity: this.config.lineOpacity})
+			.on( 'click', function( e ) {
+				console.log( data[0].trip_id );
+			} )
+			.addTo(map);
 		$('.trip_count').text(this.trip_count++);
 	}
 }
