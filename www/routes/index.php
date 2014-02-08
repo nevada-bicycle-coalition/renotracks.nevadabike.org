@@ -77,7 +77,7 @@ $config_json = json_encode( $config );
 
 	<footer>
 		<p>Visualizing <span class="trip_count">n</span> of <span class="trip_total">m</span> trips collected by
-			<span class="user_count">n</span> contributors
+			<!-- <span class="user_count">n</span> --> contributors
 			to <a href="/">RenoTracks</a>.</p>
 	</footer>
 
