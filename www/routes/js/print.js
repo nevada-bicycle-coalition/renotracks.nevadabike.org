@@ -31,7 +31,7 @@ function loadData (){
 
 var Trips ={
 	init: function(config) {
-		this.trip_count = 1;
+		this.tripCount = 1;
 		this.config =config;
 	 	this.trips = this.fetchTrips();	 	
 	},
@@ -84,7 +84,7 @@ var Trips ={
 			latlngs.push(latlng);
 		});	
 		polyline = L.polyline(latlngs, {color: 'red', weight: 1, opacity: .1}).addTo(map);
-		$('.trip_count').text(this.trip_count++);
+		$('.trip_count').text(this.tripCount++);
 	}
 }
 

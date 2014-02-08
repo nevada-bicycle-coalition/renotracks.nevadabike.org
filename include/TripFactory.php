@@ -128,6 +128,21 @@ class TripFactory
 		return false;
 	}
 	
+	public static function getTrips(){
+		$db = DatabaseConnectionFactory::getConnection();
+		$trip_ids = array();
+
+		$query = "SELECT * FROM trip";
+
+		$result = $db->query( $query );
+		while ( $trip = $result->fetch_object( self::$class ) )
+				$trip_ids[] = $trip;
+
+		$result->close();
+
+		return json_encode($trip_ids);
+	}
+
 	public static function getTripIds(){
 		$db = DatabaseConnectionFactory::getConnection();
 		$trip_ids = array();

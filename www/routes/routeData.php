@@ -11,7 +11,7 @@ if($_POST['t']=="get_coords_by_trip"){
 	echo $obj->getCoordsByTrip($_POST['q']);
 } else if ($_POST['t']=="get_trip_ids"){
 	$obj = new TripFactory();
-	echo $obj->getTripIds();	
+	echo $obj->getTrips();
 } else {
 	//no-op
 }

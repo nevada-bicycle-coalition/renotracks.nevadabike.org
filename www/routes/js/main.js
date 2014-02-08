@@ -26,7 +26,9 @@ var geojsonLayer;
 
 var Trips ={
 	init: function(config) {
-		this.trip_count = 1;
+		this.tripCount = 1;
+		this.userIds = {};
+		this.userCount = 0;
 		this.config = config;
 		if (config.tripId) {
 			this.trips = [ config.tripId ];
@@ -35,8 +37,16 @@ var Trips ={
 			Trips.fetchData( config.tripId );
 		} else {
 			this.config.lineWeight = 2;
-			this.config.lineOpacity = 0.2;
+			this.config.lineOpacity = 0.05;
 			this.trips = this.fetchTrips();
+		}
+	},
+	countTrip: function(trip) {
+		if ( trip.user_id in this.userIds ) {
+			this.userIds[trip.user_id]++;
+		} else {
+			this.userIds[trip.user_id] = 0;
+			this.userCount++;
 		}
 	},
 	fetchTrips: function(query) {
@@ -51,10 +61,10 @@ var Trips ={
 			success: function(results) {
 				$('.trip_total').text(results.length);
 				for(var n in results){
+					self.countTrip(results[n]);
 		 			self.fetchData(results[n].id);
 			 	}			 
 				self.trips = results;
-				
 			}
 		});
 		return self.trips;
@@ -93,7 +103,8 @@ var Trips ={
 				console.log( data[0].trip_id );
 			} )
 			.addTo(map);
-		$('.trip_count').text(this.trip_count++);
+		$('.trip_count').text(this.tripCount++);
+		$('.user_count').text(this.userCount);
 	}
 }
 
