@@ -42,6 +42,7 @@ if (isset($_SERVER['HTTP_CYCLEATL_PROTOCOL_VERSION'])) {
 } else {
   $version = null;
 }
+$device = null;
 
 Util::log ( "protocol version: {$version}");
 
@@ -81,6 +82,7 @@ elseif ( $version == PROTOCOL_VERSION_4 ) {
 }
 
 // validate device ID
+$device = str_replace( '-', '', $device );
 if ( is_string( $device ) && strlen( $device ) === 32 )
 {
 	// try to lookup user by this device ID
