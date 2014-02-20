@@ -29,6 +29,7 @@ var Trips ={
 		this.tripCount = 1;
 		this.userIds = {};
 		this.userCount = 0;
+		this.lines = {};
 		this.config = config;
 		if (config.tripId) {
 			this.trips = [ config.tripId ];
@@ -89,20 +90,22 @@ var Trips ={
 	attachPolyline: function() {
 		var latlng,
 			polyline,
-			data = this.data;
-
-			latlngs = new Array();
+			data = this.data,
+			latlngs = [];
 
 		$(this.data).each(function() {
 			self = $(this)[0]; 
 			latlng = new L.LatLng(self.latitude,self.longitude);
 			latlngs.push(latlng);
-		});	
-		polyline = L.polyline(latlngs, {color: 'red', weight: this.config.lineWeight, opacity: this.config.lineOpacity})
-			.on( 'click', function( e ) {
-				console.log( data[0].trip_id );
-			} )
-			.addTo(map);
+		});
+
+		if ( latlngs.length ) {
+			this.lines[data[0].trip_id] = L.polyline(latlngs, {color: 'red', weight: this.config.lineWeight, opacity: this.config.lineOpacity})
+				.on( 'click', function( e ) {
+					console.log( data[0].trip_id );
+				} )
+				.addTo(map);
+		}
 		$('.trip_count').text(this.tripCount++);
 		$('.user_count').text(this.userCount);
 	}
