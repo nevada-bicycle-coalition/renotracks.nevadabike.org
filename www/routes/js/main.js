@@ -54,11 +54,12 @@ var Trips ={
 		var self = Trips;
 		$.ajax({
 			url: 'routeData.php',
-			type: 'POST',
+			type: 'GET',
 			data: {
 				t:'get_trip_ids'
 				}, 
 			dataType: 'json',
+			cache: true,
 			success: function(results) {
 				$('.trip_total').text(results.length);
 				for(var n in results){
@@ -74,12 +75,13 @@ var Trips ={
 		var self = Trips;
 		$.ajax({
 			url: 'routeData.php',
-			type: 'POST',
+			type: 'GET',
 			data: {
 				q:query,
 				t:'get_coords_by_trip'
 				}, 
 			dataType: 'json',
+			cache: true,
 			success: function(results) {
 				self.data = results;
 				self.attachPolyline();
