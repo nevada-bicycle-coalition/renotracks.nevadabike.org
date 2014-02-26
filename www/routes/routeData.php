@@ -9,7 +9,9 @@ header( 'Content-Type: application/json' );
 
 if($_GET['t']=="get_coords_by_trip"){
 	$obj = new CoordFactory();
-	echo $obj->getCoordsByTrip($_GET['q']);
+	$coords = $obj->getCoordsByTrip($_GET['q']);
+	header( 'Content-Length: '. strlen( $coords ) );
+	echo $coords;
 } else if ($_GET['t']=="get_trip_ids"){
 	$obj = new TripFactory();
 	echo $obj->getTrips();
