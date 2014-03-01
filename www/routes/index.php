@@ -90,7 +90,7 @@ $config_json = json_encode( $config );
 
 <script src="js/vendor/bootstrap.min.js"></script>
 
-<script src="js/main.js?v=20140225"></script>
+<script src="js/main.js?v=20140228"></script>
 
 <script type="text/javascript">
 	(function () {
