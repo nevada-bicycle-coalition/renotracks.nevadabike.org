@@ -123,8 +123,7 @@ jQuery( '.btn.streets' ).button('toggle').on( 'click', function() {
 } );
 
 jQuery( '.btn.rtc' ).on( 'click', function() {
-	var rtc_url = "http://geocommons.com/datasets/402220/features.json?lat=" +
-		renoCenter.lat + "&amp;lon=" + renoCenter.lng + "&amp;radius=25&amp;callback=?";
+	var rtc_url = "js/reno-improvements.json";
 	var rtc_styles = {};
 	var rtc_groups = {};
 	var rtc_colors = [
