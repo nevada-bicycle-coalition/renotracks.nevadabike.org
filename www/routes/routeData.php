@@ -1,4 +1,5 @@
 <?php
+set_include_path( dirname( dirname( dirname( __FILE__ ) ) ) . '/include' . PATH_SEPARATOR . get_include_path() );
 include_once('CoordFactory.php');
 include_once('TripFactory.php');
 

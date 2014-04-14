@@ -1,5 +1,6 @@
 <?php
 
+set_include_path( dirname( dirname( dirname( __FILE__ ) ) ) . '/include' . PATH_SEPARATOR . get_include_path() );
 require_once('Util.php');
 require_once('UserFactory.php');
 require_once('TripFactory.php');
