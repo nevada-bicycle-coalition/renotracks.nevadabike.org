@@ -1405,3 +1405,24 @@ if hash_key_equals($rabbitmq_values, 'install', 1) {
   }
 }
 
+# Begin varnish
+
+file { "${nginx::params::nx_conf_dir}/conf.d/default.conf":
+  ensure => absent,
+}
+
+class {'varnish':
+  varnish_listen_port => '80',
+  varnish_storage_size => '64M',
+}
+
+class {'varnish::vcl':
+
+  backends => {'local' => { host => '127.0.0.1', port => '8080' } },
+
+  directors => {'cluster0' => { backends => [ 'local' ] } },
+
+  selectors => {'cluster0' => { condition => 'true' } },
+
+}
+
