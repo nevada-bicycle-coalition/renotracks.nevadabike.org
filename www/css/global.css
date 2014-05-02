@@ -179,6 +179,14 @@ a {
   color: #aaaaaa;
   font-family: 'Open Sans', sans-serif;
 }
+.global_feature {
+    background: #da4;
+    padding: 20px;
+    color: #ffffff;
+    text-align: center;
+    font-family: 'Libre Baskerville', serif;
+    line-height: 1.6em;
+}
 .global_more_details .row {
   border-top: 1px solid #eeeeee;
   margin-top: 20px;

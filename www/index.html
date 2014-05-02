@@ -1,137 +1,183 @@
 <!DOCTYPE html>
-  <!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en" > <![endif]-->
-  <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en"> <!--<![endif]-->
 
-  <head>
+<head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width"/>
     <title>RenoTracks</title>
 
     <!-- favicon -->
     <link rel="icon" type="image/gif" href="images/favicon.ico">
 
     <!-- fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic|Open+Sans:600italic,700italic,400,300,600,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic|Open+Sans:600italic,700italic,400,300,600,700'
+          rel='stylesheet' type='text/css'>
 
     <!-- css -->
-    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/global.css"/>
 
     <!-- foundation -->
-    <link rel="stylesheet" href="lib/foundation/normalize.css" />
-    <link rel="stylesheet" href="lib/foundation/foundation.min.css" />
+    <link rel="stylesheet" href="lib/foundation/normalize.css"/>
+    <link rel="stylesheet" href="lib/foundation/foundation.min.css"/>
 
     <!-- tracking -->
     <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-35489732-1']);
-      _gaq.push(['_trackPageview']);
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-35489732-1']);
+        _gaq.push(['_trackPageview']);
 
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
     </script>
 
-  </head>
-  <body>
+</head>
+<body>
 
-    <div class="global_content on">
+<div class="global_content on">
 
-      <!-- header -->
-      <section class="global_header">
-
-        <div class="row">
-
-          <div class="column large-10 large-centered small-12 small-centered">
-            <img src="images/RENO_Web.png" class="logo" />
-              <h1>RenoTracks</h1>
-
-            <p>An app for recording your bicycle trips. Using the app helps the City of Reno better understand bike routes and improve transportation efficacy throughout the city and Washoe County.</p>
-          </div>
-        </div>
-          <div>
-            <a target="_blank" href="https://itunes.apple.com/us/app/renotracks/id769446317?ls=1&mt=8"><img src="images/appStore.png" alt="app store icon" class="appStore"/></a>
-          </div>
-      </section><!-- end .global_header -->
-
-
-      <!-- body -->
-      <section class="global_body">
+    <!-- header -->
+    <section class="global_header">
 
         <div class="row">
 
-          <div class="column large-4 small-12">
-            <img src="images/home_icon_track.png" class="icon" />
-            <h2>Track Data</h2>
-            <p>Use your phone's GPS to record your routes. City planners will get to know which routes cyclists prefer. RenoTracks will allows you to contact the right authorities to get things like potholes or obstructed bike lanes fixed. See all of Reno's tracks on the <a href="/routes/">interactive map</a>.</p>
-          </div>
+            <div class="column large-10 large-centered small-12 small-centered">
+                <img src="images/RENO_Web.png" class="logo"/>
 
-          <div class="column large-4 small-12">
-            <img src="images/home_icon_improve.png" class="icon" />
-            <h2>Pave the Future</h2>
-            <p>Information collected by the app will be used to make strategic improvements to bicycle infrastructure. This will make cycling in Reno far more pleasant, and encourage those who currently don’t bike to give it a go.</p>
-          </div>
+                <h1>RenoTracks</h1>
 
-          <div class="column large-4 small-12">
-            <img src="images/home_icon_follow.png" class="icon" />
-            <h2>Follow the Project</h2>
-            <p>We encourage your strong support to improve our community. This is all about you Reno! Stay involved and follow the project on <a href="https://twitter.com/RenoTracks">Twitter</a> and <a href="https://www.facebook.com/RenoTracks">Facebook</a>. <a href="RenoTrackshelp.html">View instructions here</a>.</p>
-          </div>
-
+                <p>Vote with your wheels.</p>
+            </div>
         </div>
+        <div>
+            <a target="_blank" href="https://itunes.apple.com/us/app/renotracks/id769446317?ls=1&mt=8"><img
+                    src="images/appStore.png" alt="app store icon" class="appStore"/></a>
+        </div>
+    </section>
+    <!-- end .global_header -->
 
-      </section><!-- end .global_body -->
+    <section class="global_feature">
+        <div class="row">
+            <div class="column small-12 small-centered large-10">
+                <h2>
+                    Bike to work, school, and fun May 10-16 2014
+                    <a href="http://bikenevada.org">Learn More</a>
+                </h2>
+            </div>
+        </div>
+    </section>
 
+    <!-- body -->
+    <section class="global_body">
 
-      <!-- more details -->
-      <section class="global_more_details">
 
         <div class="row">
 
-          <div class="column large-8 small-12">
-            <h2>Development</h2>
-            <p> RenoTracks is a joint project created during the 2013 <a href="http://hack4reno.com">Hack 4 Reno</a> hackathon in order to develop a reliable and accurate method of collecting cycling data from Reno bicyclists. </p>
-          </div>
+            <div class="column large-4 small-12">
+                <img src="images/home_icon_track.png" class="icon"/>
 
-          <div class="column large-4 small-12">
-            <h2>Contact Us</h2>
-            <p><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;tf=1&amp;to=Renotracksinfo@gmail.com" target="_blank">RenoTracksinfo@gmail.com</a> for help, general inquiries, comments or questions.<br></p>
-          </div>
+                <h2>Track Data</h2>
+
+                <p>Use your phone's GPS to record your routes. City planners will get to know which routes cyclists
+                    prefer. RenoTracks will allows you to contact the right authorities to get things like potholes or
+                    obstructed bike lanes fixed. See all of Reno's tracks on the <a href="/routes/">interactive map</a>.
+                </p>
+            </div>
+
+            <div class="column large-4 small-12">
+                <img src="images/home_icon_improve.png" class="icon"/>
+
+                <h2>Pave the Future</h2>
+
+                <p>Information collected by the app will be used to make strategic improvements to bicycle
+                    infrastructure. This will make cycling in Reno far more pleasant, and encourage those who currently
+                    don’t bike to give it a go.</p>
+            </div>
+
+            <div class="column large-4 small-12">
+                <img src="images/home_icon_follow.png" class="icon"/>
+
+                <h2>Follow the Project</h2>
+
+                <p>We encourage your strong support to improve our community. This is all about you Reno! Stay involved
+                    and follow the project on <a href="https://twitter.com/RenoTracks">Twitter</a> and <a
+                            href="https://www.facebook.com/RenoTracks">Facebook</a>. <a href="RenoTrackshelp.html">View
+                        instructions here</a>.</p>
+            </div>
 
         </div>
 
-      </section><!-- end .global_more_details -->
+    </section>
+    <!-- end .global_body -->
 
 
-      <!-- footer -->
-      <section class="global_footer">
+    <!-- more details -->
+    <section class="global_more_details">
 
         <div class="row">
-          <p>RenoTracks is based on the CycleTracks app originally developed for the <a href="http://www.sfcta.org/content/category/12/97/483/">San Francisco Country Transportation Authority</a> and the <a href="http://cycleatlanta.org/">Cycle Atlanta</a> app.</p>
+
+            <div class="column large-8 small-12">
+                <h2>Development</h2>
+
+                <p> RenoTracks is a joint project created during the 2013 <a href="http://hack4reno.com">Hack 4 Reno</a>
+                    hackathon for the <a href="http://www.nevadabike.org">Nevada Bicycle Coalition</a> to develop a
+                    reliable and accurate method of collecting cycling data from Reno
+                    bicyclists, for Reno bicyclists. </p>
+            </div>
+
+            <div class="column large-4 small-12">
+                <h2>Contact Us</h2>
+
+                <p><a href="mailto:RenoTracksInfo@gmail.com?subject=RenoTracks"
+                      target="_blank">RenoTracksInfo@gmail.com</a> for help, general inquiries, comments or
+                    questions.<br></p>
+            </div>
+
         </div>
 
-      </section><!-- end .global_footer -->
+    </section>
+    <!-- end .global_more_details -->
 
-    </div>
+
+    <!-- footer -->
+    <section class="global_footer">
+
+        <div class="row">
+            <p>RenoTracks is based on the CycleTracks app originally developed for the <a
+                    href="http://www.sfcta.org/content/category/12/97/483/">San Francisco Country Transportation
+                Authority</a> and the <a href="http://cycleatlanta.org/">Cycle Atlanta</a> app.</p>
+        </div>
+
+    </section>
+    <!-- end .global_footer -->
+
+</div>
 
 
-    <!-- menu -->
+<!-- menu -->
 
-    <a href="#" class="menu_btn">
-      <img src="images/menu_btn.png" />
-    </a>
+<a href="#" class="menu_btn">
+    <img src="images/menu_btn.png"/>
+</a>
 
-    <div class="global_menu">
-      <ul>
+<div class="global_menu">
+    <ul>
         <li>
-          <a href="/RenoTrackshelp.html">Instructions</a>
+            <a href="/RenoTrackshelp.html">Instructions</a>
         </li>
         <li>
-          <a href="/routes/">Routes</a>
+            <a href="/routes/">Routes</a>
         </li>
-      </ul>
-    </div>
+    </ul>
+</div>
 
-  </body>
+</body>
 </html>
