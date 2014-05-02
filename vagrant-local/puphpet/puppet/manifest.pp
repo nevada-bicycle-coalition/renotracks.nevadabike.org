@@ -1426,3 +1426,11 @@ class {'varnish::vcl':
 
 }
 
+# Begin wp-cli
+
+exec {'wp-cli':
+   command => 'curl -L https://raw.github.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > /usr/bin/wp; \
+               chmod +x /usr/bin/wp;',
+   creates => '/usr/bin/wp'
+}
+

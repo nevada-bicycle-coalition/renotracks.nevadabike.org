@@ -108,6 +108,38 @@ nginx:
                 - 'RT_DB_USER renotracks'
                 - 'RT_DB_PASS mysql4renotracks'
                 - 'RT_UPLOAD_DIR /var/renotracks-uploads'
+        bc925cf6e1d35:
+            server_name: rtstage.nevadabike.org
+            server_aliases:
+                - rtstage.dev
+            www_root: /var/www/rtstage/www
+            listen_port: '8080'
+            index_files:
+                - index.html
+                - index.htm
+                - index.php
+            envvars:
+                - 'APP_ENV dev'
+                - 'RT_DB_NAME rtstage'
+                - 'RT_DB_USER rtstage'
+                - 'RT_DB_PASS mysql4renotracks'
+                - 'RT_UPLOAD_DIR /var/rtstage-uploads'
+        4I8ltdZw8wQA:
+            server_name: www.nevadabike.org
+            server_aliases:
+                - wp.nevadabike.org
+            www_root: /var/www/wp
+            listen_port: '8080'
+            index_files:
+                - index.html
+                - index.htm
+                - index.php
+            envvars:
+                - 'APP_ENV dev'
+                - 'DB_NAME wp_nvbc'
+                - 'DB_USER wp_nvbc'
+                - 'DB_PASS cezc3NDZNCvt'
+                - 'DB_HOST localhost'
 php:
     install: '1'
     version: '54'
@@ -152,6 +184,22 @@ mysql:
             host: localhost
             user: renotracks
             password: mysql4renotracks
+            sql_file: 
+        386d9a19cdfc:
+            grant:
+                - ALL
+            name: rtstage
+            host: localhost
+            user: rtstage
+            password: mysql4renotracks
+            sql_file: 
+        cezc3NDZNCvt:
+            grant:
+                - ALL
+            name: wp_nvbc
+            host: localhost
+            user: wp_nvbc
+            password: cezc3NDZNCvt
             sql_file: 
 postgresql:
     install: 0
