@@ -32,7 +32,6 @@ define( 'TILE_SIZE_FACTOR', 0.5 );
 define( 'SPOT_RADIUS', 0 );
 define( 'SPOT_DIMMING_LEVEL', 127 );
 
-$set = isset( )
 $overwrite = isset( $argv[1] ) ? (bool)$argv[1] : true;
 $start_zoom = isset( $argv[2] ) ? intval( $argv[2] ) : MAX_ZOOM;
 for( $zoom = $start_zoom; $zoom > 1; $zoom -= 1 ) {
