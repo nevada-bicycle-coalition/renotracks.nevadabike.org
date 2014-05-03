@@ -23,16 +23,9 @@ $config_json = json_encode( $config );
 
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"/>
-	<style>
-		body {
-			padding-top: 60px;
-			padding-bottom: 40px;
-		}
-	</style>
 	<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
 	<link rel="stylesheet" href="css/main.css">
 
-	<!--         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script> -->
 	<script type="text/javascript">
 		var _gaq = _gaq || [];
 		_gaq.push( ['_setAccount', ''] );
@@ -61,25 +54,37 @@ $config_json = json_encode( $config );
 	<div class="navbar-inner">
 		<div class="container">
 
-			<p class="cycleAtl_title">Visualize RenoTracks Data</p>
+			<span class="brand">RenoTracks</span>
+
+			<ul class="nav">
+				<li><a href="/">Home</a></li>
+				<li class="active"><a href=".">Map</a></li>
+			</ul>
 
 		</div>
 	</div>
 </div>
 
-<div class="container">
-	<button type="button" data-toggle="button" class="btn streets">Streets</button>
-	<div class="btn-group">
-		<button type="button" class="btn rtc">Bike Lanes and More</button>
+<div id="sidebar">
+	<div class="section">
+		<div class="title">
+			 <a href="#sidebar_content" data-toggle="collapse">Map Options</a>
+		</div>
 	</div>
-	<div id="mapBody"></div>
-	<hr>
-
-	<footer>
-		<p>Visualizing <span class="trip_count">n</span> of <span class="trip_total">m</span> trips collected by
-			<!-- <span class="user_count">n</span> --> contributors
-			to <a href="/">RenoTracks</a>.</p>
-	</footer>
+	<div id="sidebar_content" class="collapse in">
+		<div id="map_controls" class="section">
+			<button type="button" data-toggle="button" class="btn streets">Streets</button><br/>
+			<button type="button" class="btn rtc">Bike Lanes and More</button>
+		</div>
+		<div class="section info">
+			<p>Visualizing <span class="trip_total">m</span> trips.</p>
+		</div>
+	</div>
+</div>
+<div class="row-fluid">
+	<div class="span12">
+		<div id="mapBody"></div>
+	</div>
 
 </div>
 <!-- /container -->

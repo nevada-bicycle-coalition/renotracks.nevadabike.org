@@ -73,4 +73,20 @@ class CoordFactory
 
 		return json_encode($coords);
 	}
+
+	public static function getCoordsInBox( $swlat, $swlng, $nelat, $nelng ) {
+		$db = DatabaseConnectionFactory::getConnection();
+		$query = 'SELECT * FROM coord WHERE latitude BETWEEN ' .
+			doubleval( $swlat ) . ' AND ' . doubleval( $nelat ) . ' AND longitude BETWEEN ' .
+			doubleval( $swlng ) . ' AND ' . doubleval( $nelng );
+		return $db->query( $query );
+		$coords = array();
+		if ( ( $result = $db->query( $query ) ) && $result->num_rows ) {
+			while ( $coord = $result->fetch_object( self::$class ) )
+				$coords[] = $coord;
+		}
+		$result->close();
+
+		return $coords;
+	}
 }

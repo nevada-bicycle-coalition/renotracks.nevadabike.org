@@ -2,12 +2,19 @@
 var renoCenter = new L.LatLng( 39.519933, -119.789643 );
 var map = L.map('mapBody', {
 	center: renoCenter,
-	zoom: 13
-});
-
+	zoom: 13,
+	zoomControl: false,
+	maxZoom: 16
+} ).on( 'resize', function( e ) {
+	var $container = jQuery( map.getContainer() ),
+		height = jQuery( window ).height() - jQuery( '.navbar' ).height();
+	$container.height( height );
+} );
+map.addControl( L.control.zoom( { position: 'topright' } ) );
+map.fireEvent( 'resize' );
 var mapTileLayer = new L.TileLayer(
 	'http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
-	{maxZoom: 19, attribution: 'Tiles: &copy; Esri' }
+	{maxZoom: 16, attribution: 'Tiles: &copy; Esri' }
 );
 map.addLayer(mapTileLayer);
 
@@ -15,6 +22,13 @@ map.addLayer(
 	new L.TileLayer(
 		'http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
 		{maxZoom: 19, attribution: 'Tiles: &copy; Esri' }
+	)
+);
+
+map.addLayer(
+	new L.TileLayer(
+		'tiler/tile/{z}/{x}_{y}.png',
+		{maxZoom: 16 }
 	)
 );
 
@@ -64,7 +78,7 @@ var Trips ={
 				$('.trip_total').text(results.length);
 				for(var n in results){
 					self.countTrip(results[n]);
-		 			self.fetchData(results[n].id);
+		 			//self.fetchData(results[n].id);
 			 	}			 
 				self.trips = results;
 			}
@@ -133,7 +147,7 @@ jQuery( '.btn.rtc' ).on( 'click', function() {
 	jQuery.getJSON(rtc_url, function(data){
 		var $buttonGroup = $button.parent();
 		$button.detach();
-		 geojsonLayer = new L.GeoJSON( data, {
+		geojsonLayer = new L.GeoJSON( data, {
 			style: function( feature ) {
 				var style = { weight: 3 };
 				if ( !rtc_styles.hasOwnProperty( feature.properties.Type ) ) {
