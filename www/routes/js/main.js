@@ -25,15 +25,11 @@ map.addLayer(
 	)
 );
 
-map.addLayer(
-	new L.TileLayer(
-		'tiler/tile/{z}/{x}_{y}.png',
-		{maxZoom: 16 }
-	)
+var tripTileLayer = new L.TileLayer(
+	'tiler/all/{z}/{x}_{y}.png',
+	{maxZoom: 16 }
 );
-
-var tilesVisible = true;
-
+map.addLayer( tripTileLayer );
 
 var geojsonLayer;
 
@@ -53,8 +49,20 @@ var Trips ={
 		} else {
 			this.config.lineWeight = 2;
 			this.config.lineOpacity = 0.05;
-			this.trips = this.fetchTrips();
+			this.fetchTileMeta();
 		}
+	},
+	fetchTileMeta: function() {
+		$.ajax({
+			url: 'tiler/all/meta.json',
+			type: 'GET',
+			dataType: 'json',
+			success: function( results ) {
+				$( '.trip_count' ).text( results.trip_count );
+				$( '.coordinate_count' ).text( results.coordinate_count );
+
+			}
+		})
 	},
 	countTrip: function(trip) {
 		if ( trip.user_id in this.userIds ) {
@@ -133,6 +141,14 @@ jQuery( '.btn.streets' ).button('toggle').on( 'click', function() {
 		mapTileLayer.setOpacity(0);
 	} else {
 		mapTileLayer.setOpacity(1);
+	}
+} );
+
+jQuery( '.btn.trips' ).button('toggle').on( 'click', function() {
+	if ( $(this).hasClass( 'active' ) ) {
+		tripTileLayer.setOpacity(0);
+	} else {
+		tripTileLayer.setOpacity(1);
 	}
 } );
 

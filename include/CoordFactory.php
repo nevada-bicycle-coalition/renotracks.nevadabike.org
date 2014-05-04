@@ -74,19 +74,33 @@ class CoordFactory
 		return json_encode($coords);
 	}
 
-	public static function getCoordsInBox( $swlat, $swlng, $nelat, $nelng ) {
+	public static function getCoordsInBoxResult( $swlat, $swlng, $nelat, $nelng ) {
 		$db = DatabaseConnectionFactory::getConnection();
-		$query = 'SELECT * FROM coord WHERE latitude BETWEEN ' .
-			doubleval( $swlat ) . ' AND ' . doubleval( $nelat ) . ' AND longitude BETWEEN ' .
-			doubleval( $swlng ) . ' AND ' . doubleval( $nelng );
+		$query = 'SELECT * FROM coord WHERE ' . self::boxWhere( $swlat, $swlng, $nelat, $nelng );
 		return $db->query( $query );
+	}
+
+	public static function getCoordsInBox( $swlat, $swlng, $nelat, $nelng ) {
+		$result = self::getCoordsInBoxResult( $swlat, $swlng, $nelat, $nelng );
 		$coords = array();
-		if ( ( $result = $db->query( $query ) ) && $result->num_rows ) {
+		if ( $result->num_rows ) {
 			while ( $coord = $result->fetch_object( self::$class ) )
 				$coords[] = $coord;
 		}
 		$result->close();
 
 		return $coords;
+	}
+
+	public static function getTripIDsInBoxResult( $swlat, $swlng, $nelat, $nelng ) {
+		$db = DatabaseConnectionFactory::getConnection();
+		$query = 'SELECT DISTINCT(trip_id) FROM coord WHERE ' . self::boxWhere( $swlat, $swlng, $nelat, $nelng );
+		return $db->query( $query );
+	}
+
+	protected static function boxWhere( $swlat, $swlng, $nelat, $nelng ) {
+		return 'latitude BETWEEN ' .
+			doubleval( $swlat ) . ' AND ' . doubleval( $nelat ) . ' AND longitude BETWEEN ' .
+			doubleval( $swlng ) . ' AND ' . doubleval( $nelng );
 	}
 }

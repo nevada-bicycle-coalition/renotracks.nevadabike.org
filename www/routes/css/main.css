@@ -39,6 +39,9 @@
 	width: 45%;
 	margin: 2px 5px;
 }
+#sidebar button.btn:first-child {
+	margin-right:0;
+}
 
 @media (max-width: 699px) {
 	#sidebar {
@@ -50,6 +53,6 @@
 	}
 }
 
-.trip_count, .trip_total {
+.trip_count, .trip_total, .coordinate_count {
 	font-weight: 600;
 }
