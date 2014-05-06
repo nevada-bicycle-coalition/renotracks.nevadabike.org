@@ -2,7 +2,7 @@
 /**
  * Create map tiles from track data.
  */
-ini_set( 'memory_limit', '2G' );
+ini_set( 'memory_limit', '200M' );
 
 if ( !isset( $argc ) )
 	die( 'CLI dude' );
@@ -13,16 +13,15 @@ require_once( 'GoogleMapUtility.php' );
 require_once( 'HeatMap.php' );
 
 $defaults = array(
-	'tile_dir' => 'tile/',
+	'tile_dir' => 'all/',
 	'sw_lat' => 39.4,
 	'sw_lng' => -120,
 	'ne_lat' => 39.7,
-	'ne_lng' => -119.7,
+	'ne_lng' => -119.6,
 	'max_zoom' => 16,
 	'start_zoom' => 16,
-	'overwrite' => true,
 	'spot_radius' => 0,
-	'spot_dimming_level' => 75,
+	'spot_dimming' => 75,
 	'tile_size_factor' => 0.5,
 	'zero_radius_final_zoom' => 17,
 );
@@ -41,119 +40,161 @@ foreach ( $defaults as $name => $value ) {
 		$options[$name] = $defaults[$name];
 	}
 }
+$options['tile_dir'] = rtrim( $options['tile_dir'], '/' ) . '/';
 
+$meta = startMetaFile( $options );
 
-$coords_result = CoordFactory::getCoordsInBoxResult( $options['sw_lat'], $options['sw_lng'], $options['ne_lat'], $options['ne_lng'] );
-$trip_id_result = CoordFactory::getTripIDsInBoxResult( $options['sw_lat'], $options['sw_lng'], $options['ne_lat'], $options['ne_lng'] );
-$meta = $options + array(
-		'trip_count' => $trip_id_result->num_rows,
-		'coordinate_count' => $coords_result->num_rows,
-		'started' => date( 'c' ),
-	);
-$trip_id_result->free();
-$coords_result->free();
+$from_tile = GoogleMapUtility::getTileXY( $options['ne_lat'], $options['sw_lng'], $options['start_zoom'] );
+$to_tile = GoogleMapUtility::getTileXY( $options['sw_lat'], $options['ne_lng'], $options['start_zoom'] );
 
-file_put_contents( $options['tile_dir'] . 'meta.json', json_encode( $meta ) );
-
-for ( $zoom = $options['start_zoom']; $zoom > 1; $zoom -= 1 ) {
-	$from_tile = GoogleMapUtility::getTileXY( $options['ne_lat'], $options['sw_lng'], $zoom );
-	$to_tile = GoogleMapUtility::getTileXY( $options['sw_lat'], $options['ne_lng'], $zoom );
-
-	for ( $x = $from_tile->x; $x <= $to_tile->x; $x += 1 ) {
-		for ( $y = $from_tile->y; $y <= $to_tile->y; $y += 1 ) {
-			makeTile( $x, $y, $zoom, $options );
-		}
+for ( $x = $from_tile->x; $x <= $to_tile->x; $x += 1 ) {
+	for ( $y = $from_tile->y; $y <= $to_tile->y; $y += 1 ) {
+		makeGrayscaleTiles( $x, $y, $options['start_zoom'], $options );
 	}
 }
 
-$meta['finished'] = date( 'c' );
-file_put_contents( $options['tile_dir'] . 'meta.json', json_encode( $meta ) );
+$dir_iterator =  new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $options['tile_dir'] ) );
+foreach ( $dir_iterator as $name => $fileinfo ) {
+	if ( strpos( $name, '.png' ) ) {
+		$im = imagecreatefrompng( $name );
+		imagealphablending( $im, false );
+		imagesavealpha( $im, true );
+		HeatMap::applyColorScale( $im, HeatMap::$WITH_ALPHA, HeatMap::$GRADIENT_CLASSIC );
+		imagepng( $im, $name );
+		imagedestroy( $im );
+	}
+}
+
+finishMetaFile( $meta );
 
 exit( 0 );
 
 
 /**
- * Query datapoints at a Google tile address and create a tile image.
+ * Query the database for stats on the overall tile area and write them to a meta.json
+ * file in the root of the tile directory tree with a start time.
  *
- * @param int $X Google tile x coordinate.
- * @param int $Y Google tile y coordinate.
+ * @param array $options
+ * @return array metadata
+ */
+function startMetaFile( $options ) {
+	$coords_result = CoordFactory::getCoordsInBoxResult( $options['sw_lat'], $options['sw_lng'], $options['ne_lat'], $options['ne_lng'] );
+	$trip_id_result = CoordFactory::getTripIDsInBoxResult( $options['sw_lat'], $options['sw_lng'], $options['ne_lat'], $options['ne_lng'] );
+	$meta = $options + array(
+			'trip_count' => $trip_id_result->num_rows,
+			'coordinate_count' => $coords_result->num_rows,
+			'started' => date( 'c' ),
+		);
+	$trip_id_result->free();
+	$coords_result->free();
+
+	if ( !file_exists( $options['tile_dir'] ) )
+		mkdir( $options['tile_dir'], 0705 );
+	file_put_contents( $options['tile_dir'] . 'meta.json', json_encode( $meta ) );
+	return $meta;
+}
+
+/**
+ * Re-write the metadata file with a finish time.
+ * @param $meta
+ */
+function finishMetaFile( $meta ) {
+	$meta['finished'] = date( 'c' );
+	file_put_contents( $meta['tile_dir'] . 'meta.json', json_encode( $meta ) );
+}
+
+function makeGrayscaleTiles( $x, $y, $zoom, $args ) {
+
+	list( $swlat, $swlng, $nelat, $nelng ) = tileBox( $x, $y, $zoom, $args );
+
+	if (
+		( $nelat <= $args['sw_lat'] ) ||
+		( $swlat >= $args['ne_lat'] ) ||
+		( $nelng <= $args['sw_lng'] ) ||
+		( $swlng >= $args['ne_lng'] )
+	) {
+		//No geodata so skip
+		return;
+	}
+
+	$coords = CoordFactory::getCoordsInBox( $swlat, $swlng, $nelat, $nelng );
+	if ( 0 == count( $coords ) ) {
+		return;
+	}
+
+	$center_lat = ($nelat + $swlat)/2;
+	$center_lng = ($nelng + $swlng)/2;
+	while( $zoom > 1 ) {
+		drawOnTile( $coords, $x, $y, $zoom, $args );
+		$zoom--;
+		$next_tile = GoogleMapUtility::getTileXY( $center_lat, $center_lng, $zoom );
+		$x = $next_tile->x;
+		$y = $next_tile->y;
+	}
+}
+
+/**
+ * Draw data on a map tile.
+ *
+ * @param array $coords
+ * @param int $x Google tile x coordinate.
+ * @param int $y Google tile y coordinate.
  * @param int $zoom Google zoom level (z coordinate).
  * @param array $args
- *          string tile_dir     output directory
- *          bool   overwrite    whether to replace existing tiles
- *          double sw_lat       minimum latitude of tile coverage
- *          double sw_lng       minimum longitude of tile coverage
  */
-function makeTile( $X, $Y, $zoom, $args = array() ) {
+function drawOnTile( $coords, $x, $y, $zoom, $args ) {
 
 	$dir = $args['tile_dir'] . $zoom;
 
-	$tilename = $dir . '/' . $X . '_' . $Y . '.png';
-	if ( $args['overwrite'] or !file_exists( $tilename ) ) {
+	$y_dir = $dir . '/'. $y;
+	$tilename = $y_dir . '/' . $x . '.png';
+	$im = file_exists( $tilename ) ? imagecreatefrompng( $tilename ) : null;
 
-		list( $swlat, $swlng, $nelat, $nelng ) = tileBox( $X, $Y, $zoom, $args );
-
+	$size = GoogleMapUtility::TILE_SIZE;
+	$offset = $args['spot_radius'];
+	$spots = array();
+	foreach ( $coords as $coord ) {
+		$point = GoogleMapUtility::getOffsetPixelCoords( $coord->latitude, $coord->longitude, $zoom, $x, $y );
+		//Count result only in the tile
 		if (
-			( $nelat <= $args['sw_lat'] ) ||
-			( $swlat >= $args['ne_lat'] ) ||
-			( $nelng <= $args['sw_lng'] ) ||
-			( $swlng >= $args['ne_lng'] )
+			( $point->x > -$offset ) &&
+			( $point->x < ( $size + $offset ) ) &&
+			( $point->y > -$offset ) &&
+			( $point->y < ( $size + $offset ) )
 		) {
-			//No geodata so skip
-			return;
+			$spots[] = new HeatMapPoint( $point->x, $point->y );
 		}
-
-		$result = CoordFactory::getCoordsInBoxResult( $swlat, $swlng, $nelat, $nelng );
-		if ( 0 == $result->num_rows ) {
-			$result->free();
-			return;
-		}
-
-		$offset = $args['spot_radius'];
-		$spots = array();
-		while ( $coord = $result->fetch_object( 'Coord' ) ) {
-			$point = GoogleMapUtility::getOffsetPixelCoords( $coord->latitude, $coord->longitude, $zoom, $X, $Y );
-			//Count result only in the tile
-			if (
-				( $point->x > -$offset ) &&
-				( $point->x < ( GoogleMapUtility::TILE_SIZE + $offset ) ) &&
-				( $point->y > -$offset ) &&
-				( $point->y < ( GoogleMapUtility::TILE_SIZE + $offset ) )
-			) {
-				$spots[] = new HeatMapPoint( $point->x, $point->y );
-			}
-		}
-		$result->free();
-
-		if ( empty( $spots ) ) {
-			return;
-		}
-		if ( !file_exists( $dir ) ) {
-			mkdir( $dir, 0705 );
-		}
-		echo "Create $tilename\n";
-		flush();
-		//All the magics is in HeatMap class :)
-		if ( $args['spot_radius'] > 1 ) {
-			$dimming = Max( 1, Min( 255, $args['spot_dimming'] ) );
-		} else {
-			$dimming = Max( 1, 255 >> ( $args['zero_radius_final_zoom'] - $zoom ) );
-		}
-		$im = HeatMap::createImage(
-			$spots,
-			GoogleMapUtility::TILE_SIZE,
-			GoogleMapUtility::TILE_SIZE,
-			heatMap::$WITH_ALPHA,
-			$args['spot_radius'],
-			$dimming,
-			HeatMap::$GRADIENT_CLASSIC
-		);
-		unset( $spots );
-		// store the tile
-		imagepng( $im, $tilename );
-		imagedestroy( $im );
-		unset( $im );
 	}
+
+	if ( empty( $spots ) ) {
+		return;
+	}
+	if ( !file_exists( $dir ) ) {
+		mkdir( $dir, 0705 );
+	}
+	if ( !file_exists( $y_dir ) ) {
+		mkdir( $y_dir, 0705 );
+	}
+	echo "Creating $tilename...\n";
+	flush();
+
+	$dimming = Max( 1, Min( 255, $args['spot_dimming'] ) );
+	$accrual_step = Max( 1, 255 >> ( $args['zero_radius_final_zoom'] - $zoom ) );
+	$im = HeatMap::renderGrayscaleImage(
+		$spots,
+		$size,
+		$size,
+		heatMap::$WITH_ALPHA,
+		$args['spot_radius'],
+		$dimming,
+		$accrual_step,
+		$im
+	);
+	unset( $spots );
+	// store the tile
+	imagepng( $im, $tilename );
+	imagedestroy( $im );
+	unset( $im );
 }
 
 function tileBox( $X, $Y, $zoom, $args ) {

@@ -26,7 +26,7 @@ map.addLayer(
 );
 
 var tripTileLayer = new L.TileLayer(
-	'tiler/all/{z}/{x}_{y}.png',
+	'tiler/all/{z}/{y}/{x}.png',
 	{maxZoom: 16 }
 );
 map.addLayer( tripTileLayer );

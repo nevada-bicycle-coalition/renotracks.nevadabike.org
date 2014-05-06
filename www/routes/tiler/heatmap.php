@@ -1,5 +1,8 @@
 <?php
 /*
+* Modified to treat zero or one spot_radius as single-point accrual coloring.
+* @author: Dylan Kuhn <dylan_AT_cyberhobo.net>
+*
 *DISCLAIMER
 * 
 *THIS SOFTWARE IS PROVIDED BY THE AUTHOR 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES *OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, *INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF *USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT *(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
@@ -44,32 +47,73 @@ class HeatMap{
 	private static $MAX_IMAGE_SIZE = 10000;//in px
 	
 	//generate an $image_width by $image_height pixels heatmap image of $points
-	public static function createImage($data, $image_width, $image_height, $mode=0, $spot_radius = 30, $dimming = 75, $gradient_name = 'classic'){
-		$_gradient_name = $gradient_name;
-		if(($_gradient_name != self::$GRADIENT_CLASSIC) && ($_gradient_name != self::$GRADIENT_FIRE) && ($_gradient_name != self::$GRADIENT_PGAITCH)){
-			$_gradient_name = self::$GRADIENT_CLASSIC;
-		}
+	public static function createImage(
+		$data,
+		$image_width,
+		$image_height,
+		$mode=0,
+		$spot_radius = 30,
+		$dimming = 75,
+		$gradient_name = 'classic',
+		$accrual_step = 50
+	){
+		$im = self::renderGrayscaleImage(
+			$data,
+			$image_width,
+			$image_height,
+			$mode,
+			$spot_radius,
+			$dimming,
+			$accrual_step
+		);
+
+		self::applyColorScale( $im, $mode, $gradient_name );
+
+		return $im;
+	}//createImage
+
+	public static function renderGrayscaleImage(
+		$data,
+		$image_width,
+		$image_height,
+		$mode=0,
+		$spot_radius = 30,
+		$dimming = 75,
+		$accrual_step = 50,
+		$image = null
+	) {
 		$_image_width = min(self::$MAX_IMAGE_SIZE, max(0, intval($image_width)));
 		$_image_height = min(self::$MAX_IMAGE_SIZE, max(0, intval($image_height)));
 		$_spot_radius = min(self::$MAX_RADIUS, max(self::$MIN_RADIUS, intval($spot_radius)));
 		$_dimming = min(255, max(0, intval($dimming)));
+		$_accrual_step = min( 255, max(0, intval( $accrual_step )));
 		if(!is_array($data)){
 			return false;
 		}
-		$im = imagecreatetruecolor($_image_width, $_image_height);
-		$white = imagecolorallocate($im, 255, 255, 255);
-		imagefill($im, 0, 0, $white);
+		if ( $image ) {
+			$im = $image;
+		} else {
+			$im = imagecreatetruecolor($_image_width, $_image_height);
+			$white = imagecolorallocate($im, 255, 255, 255);
+			imagefill($im, 0, 0, $white);
+		}
 		if(self::$WITH_ALPHA == $mode){
 			imagealphablending($im, false);
 			imagesavealpha($im,true);
 		}
 		//Step 1: create grayscale image
 		foreach($data as $datum){
-			if( (is_array($datum) && (count($datum)==1)) || (!is_array($datum) && ('HeatMapPoint' == get_class($datum)))){//Plot points
+			if(
+				(is_array($datum) && (count($datum)==1)) ||
+				(!is_array($datum) && ('HeatMapPoint' == get_class($datum)))
+			){//Plot points
 				if('HeatMapPoint' != get_class($datum)){
 					$datum = $datum[0];
 				}
-				self::_drawCircularGradient($im, $datum->x, $datum->y, $_spot_radius, $_dimming);
+				if ( $_spot_radius <= 1 )
+					self::_drawPixelAccrual($im, $datum->x, $datum->y, $_accrual_step );
+				else
+					self::_drawCircularGradient($im, $datum->x, $datum->y, $_spot_radius, $_dimming);
 			}else if(is_array($datum)){//Draw lines
 				$length = count($datum)-1;
 				for($i=0; $i < $length; ++$i){//Loop through points
@@ -82,7 +126,20 @@ class HeatMap{
 		if($_spot_radius >= 30){
 			imagefilter($im, IMG_FILTER_GAUSSIAN_BLUR);
 		}
-		//Step 2: create colored image
+		return $im;
+	}
+
+	public static function applyColorScale( &$im, $mode, $gradient_name ) {
+		$_image_width = imagesx( $im );
+		$_image_height = imagesy( $im );
+		$_gradient_name = $gradient_name;
+		if( ($_gradient_name != self::$GRADIENT_CLASSIC) &&
+			($_gradient_name != self::$GRADIENT_FIRE) &&
+			($_gradient_name != self::$GRADIENT_PGAITCH)
+		){
+			$_gradient_name = self::$GRADIENT_CLASSIC;
+		}
+
 		if(FALSE === ($grad_rgba = self::_createGradient($im, $mode, $_gradient_name))){
 			return FALSE;
 		}
@@ -99,7 +156,7 @@ class HeatMap{
 			imagecolortransparent($im, $grad_rgba[count($grad_rgba)-1]);
 		}
 		return $im;
-	}//createImage
+	}
 
 	//Heat an image
 	public static function heatImage($filepath, $gradient_name = 'classic', $mode= 0, $min_level=0, $max_level=255, $gradient_interpolate=0, $keep_value=0){
@@ -176,14 +233,14 @@ class HeatMap{
 		}
 		return $im;
 	}//heatImage
-	
+
+	private static function _drawPixelAccrual( &$im, $center_x, $center_y, $accrual_step ) {
+		$previous_channel = imagecolorat($im, $center_x, $center_y) & 0xFF;//grayscale so same value
+		$new_channel = Max(0, Min(255, $previous_channel - $accrual_step ) );
+		imagesetpixel($im, $center_x, $center_y, imagecolorallocate($im, $new_channel, $new_channel, $new_channel));
+	}
+
 	private static function _drawCircularGradient(&$im, $center_x, $center_y, $spot_radius, $dimming){
-		if ( $spot_radius <= 1 ) {
-			$previous_channel = imagecolorat($im, $center_x, $center_y) & 0xFF;//grayscale so same value
-			$new_channel = Max(0, Min(255, $previous_channel - $dimming ) );
-			imagesetpixel($im, $center_x, $center_y, imagecolorallocate($im, $new_channel, $new_channel, $new_channel));
-			return;
-		}
 		$dirty = array();
 		$ratio = (255 - $dimming) / $spot_radius;
 		$sx = imagesx($im);
