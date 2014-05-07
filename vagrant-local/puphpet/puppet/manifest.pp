@@ -594,7 +594,14 @@ define nginx_vhost (
     }
   }
 
-  $fastcgi_param = concat($fastcgi_param_parts, $envvars)
+  #$fastcgi_param = concat($fastcgi_param_parts, $envvars)
+
+  $fastcgi_param = concat(
+  [
+    'PATH_INFO $fastcgi_path_info',
+    'PATH_TRANSLATED $document_root$fastcgi_path_info',
+    'SCRIPT_FILENAME $document_root$fastcgi_script_name',
+  ], $envvars)
 
   nginx::resource::location { "${server_name}-php":
     ensure              => present,
@@ -1433,4 +1440,8 @@ exec {'wp-cli':
                chmod +x /usr/bin/wp;',
    creates => '/usr/bin/wp'
 }
+
+# Begin swap
+
+include swap_file
 
