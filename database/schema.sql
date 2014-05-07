@@ -29,7 +29,9 @@ CREATE TABLE note (
 	details   VARCHAR(255),
 	image_url VARCHAR(255),	
 	PRIMARY KEY ( id ),
-	UNIQUE KEY ( user_id, recorded )
+	UNIQUE KEY ( user_id, recorded ),
+  KEY ( latitude ),
+  KEY ( longitude )
 ) ENGINE=INNODB;
 
 CREATE TABLE coord (
