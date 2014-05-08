@@ -56,3 +56,20 @@
 .trip_count, .trip_total, .coordinate_count {
 	font-weight: 600;
 }
+
+.masthead {
+	background: #da4;
+	padding: 20px;
+	color: #ffffff;
+	text-align: center;
+	line-height: 1.6em;
+}
+
+.stats {
+	text-align: center;
+	font-size: 40px;
+	line-height: 1.6em;
+}
+.stat {
+	font-weight: 600;
+}

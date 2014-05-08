@@ -172,4 +172,36 @@ class TripFactory
 		 
 		return json_encode($trip_ids);
 	}
+
+	public static function getTripCountByAttribute( $attribute, $value, $after = null, $before = null ) {
+		$db = DatabaseConnectionFactory::getConnection();
+
+		$attribute = $db->escape_string( $attribute );
+		$query = "SELECT count( $attribute ) FROM trip";
+
+		if ( strpos( $attribute, 'user.' ) === 0 )
+			$query .= " JOIN user ON user.id = trip.user_id";
+
+		$wheres = array();
+		if ( is_numeric( $attribute ) )
+			$wheres[] = "$attribute=" . intval( $value );
+		else
+			$wheres[] = "$attribute='" . $db->escape_string( $value ) . "'";
+		if ( $after ) {
+			$date = new DateTime( $after );
+			$wheres[] = "start > '" . $date->format( 'Y-m-d H:i:s' ) ."'";
+		}
+		if ( $before ) {
+			$date = new DateTime( $before );
+			$wheres[] = "stop < '" . $date->format( 'Y-m-d H:i:s' ) ."'";
+		}
+		if ( !empty( $wheres ) )
+			$query .= " WHERE " . implode( ' AND ', $wheres );
+
+		$result = $db->query( $query );
+		$row = $result->fetch_row();
+		$result->close();
+
+		return intval( $row[0] );
+	}
 }
