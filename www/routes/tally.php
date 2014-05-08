@@ -1,7 +1,7 @@
 <?php
 set_include_path( dirname( dirname( dirname( __FILE__ ) ) ) . '/include' . PATH_SEPARATOR . get_include_path() );
 include_once('TripFactory.php');
-$after = '2014-05-01';
+$after = '2014-05-10';
 $before = '2014-05-17';
 
 $total = TripFactory::getTripCountByAttribute( 1, 1, $after, $before );
