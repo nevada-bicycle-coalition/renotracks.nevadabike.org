@@ -197,7 +197,7 @@ $other = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after, $befo
 	</div>
 	<div class="span4">
 		<div class="well">
-			<p>Woohoo, pump up those numbers!</p>
+			<p>Pump up those numbers! Also check out the <a href="http://bikenevada.org">Commuter Challenge!</a></p>
 		</div>
 	</div>
 </section>
