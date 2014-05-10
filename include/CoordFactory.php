@@ -37,6 +37,25 @@ class CoordFactory
 	// array of hundreds of thousands of Coord objects is memory-intensive and not useful
 	public static function getCoordsByTrip( $trip_id )
 	{
+		$result = self::getCoordsByTripResult( $trip_id );
+		if ( $result->num_rows ) {
+			// if the request was for an array of trip_ids then just return the $result class
+			// (I know, this is not very OO but putting it all in a structure in memory is no good either
+			// cL note: not clear this will work over JSON.
+			if (is_array($trip_id)) {
+				return $result;
+			}
+
+			while ( $coord = $result->fetch_object( self::$class ) )
+				$coords[] = $coord;
+
+			$result->close();
+		}
+
+		return json_encode($coords);
+	}
+
+	public static function getCoordsByTripResult( $trip_id ) {
 		$db = DatabaseConnectionFactory::getConnection();
 		$coords = array();
 		$query = "SELECT * FROM coord WHERE ";
@@ -52,26 +71,11 @@ class CoordFactory
 			}
 		} else {
 			// Reduce some overhead by including only point collected in motion
-			$query .= "trip_id='" . $db->escape_string( $trip_id ) . "' AND speed > 0";
+			$query .= "trip_id='" . $db->escape_string( $trip_id ) . "' AND speed != 0";
 		}
 		$query .= " ORDER BY trip_id ASC, recorded ASC";
 
-		if ( ( $result = $db->query( $query ) ) && $result->num_rows )
-		{
-			// if the request was for an array of trip_ids then just return the $result class
-			// (I know, this is not very OO but putting it all in a structure in memory is no good either
-			// cL note: not clear this will work over JSON.
-			if (is_array($trip_id)) {
-				return $result;
-			}
-
-			while ( $coord = $result->fetch_object( self::$class ) )
-				$coords[] = $coord;
-
-			$result->close();
-		}
-
-		return json_encode($coords);
+		return $db->query( $query );
 	}
 
 	public static function getCoordsInBoxResult( $swlat, $swlng, $nelat, $nelng ) {

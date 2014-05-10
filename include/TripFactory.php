@@ -2,6 +2,7 @@
 
 require_once('Database.php');
 require_once('Trip.php');
+require_once "TripAnalyzer.php";
 
 class TripFactory
 {
@@ -117,7 +118,7 @@ class TripFactory
 				 "n_coord='" . $db->escape_string( $n_coord ) . "' " .
 				 "WHERE id='" . $db->escape_string( $id ) . "' LIMIT 1";
 
-		if ( $db->query( $query ) ) 
+		if ( $db->query( $query ) && self::updateStats( $id ) )
 		{
 			Util::log( __METHOD__ . "() updated trip {$id}" );
 			return self::getTrip( $id );
@@ -126,6 +127,25 @@ class TripFactory
 			Util::log( __METHOD__ . "() ERROR failed to update trip {$id}: {$query}" );
 
 		return false;
+	}
+
+	public static function updateStats( $id ) {
+		$result = true;
+		$analyzer = new TripAnalyzer( TripFactory::getTrip( $id ) );
+		$stats = $analyzer->getStats();
+		$sets = array();
+		foreach( $stats as $name => $value ) {
+			if ( property_exists( self::$class, $name ) ) {
+				$sets[] = "$name=$value";
+			}
+		}
+		if ( !empty( $sets ) ) {
+			$db = DatabaseConnectionFactory::getConnection();
+			$query = "UPDATE trip SET " . implode( ",", $sets ) .
+				 "WHERE id='" . $db->escape_string( $id ) . "' LIMIT 1";
+			$result = $db->query( $query );
+		}
+		return $result;
 	}
 	
 	public static function getTrips(){
