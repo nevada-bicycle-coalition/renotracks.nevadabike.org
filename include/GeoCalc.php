@@ -1,4 +1,4 @@
-<?
+<?php
 
 // This code was converted to PHP from Visual C++
 // by Steven Brendtro on behalf of imaginerc.com
