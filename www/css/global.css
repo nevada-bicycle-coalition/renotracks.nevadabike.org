@@ -207,6 +207,11 @@ a {
   color: #aaaaaa;
   font-family: 'Open Sans', sans-serif;
 }
+.global_more_details .logo {
+  max-width: 30%;
+  float: left;
+  margin-right: 20px;
+}
 .global_footer .row {
   border-top: 1px solid #eeeeee;
   padding: 50px;
