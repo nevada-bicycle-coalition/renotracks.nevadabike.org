@@ -87,8 +87,6 @@ function startMetaFile( $options ) {
 		);
 	$trip_id_result->free();
 
-	var_dump($meta);
-	die('meta');
 	if ( !file_exists( $options['tile_dir'] ) )
 		mkdir( $options['tile_dir'], 0705 );
 	file_put_contents( $options['tile_dir'] . 'meta.json', json_encode( $meta ) );
