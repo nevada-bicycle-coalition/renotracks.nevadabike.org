@@ -193,20 +193,48 @@ class TripFactory
 		return json_encode($trip_ids);
 	}
 
+	public static function getTripCount( $after = null, $before = null ) {
+		return intval( self::getAggregateByAttribute( "count( id )", $attribute = null, $value = null, $after, $before ) );
+	}
+
 	public static function getTripCountByAttribute( $attribute, $value, $after = null, $before = null ) {
+		return intval( self::getAggregateByAttribute( "count( $attribute )", $attribute, $value, $after, $before ) );
+	}
+
+	public static function getTripMileage( $after = null, $before = null ) {
+		$miles = self::getAggregateByAttribute( "sum( distance_mi )", $attribute = null, $value = null, $after, $before );
+		return round( floatval( $miles ), 2 );
+	}
+
+	public static function getTripMileageByAttribute( $attribute, $value, $after = null, $before = null ) {
+		$miles = self::getAggregateByAttribute( "sum( distance_mi )", $attribute, $value, $after, $before );
+		return round( floatval( $miles ), 2 );
+	}
+
+	protected static function getAggregateByAttribute(
+		$aggregate,
+		$attribute = null,
+		$value = null,
+		$after = null,
+		$before = null
+	) {
 		$db = DatabaseConnectionFactory::getConnection();
 
-		$attribute = $db->escape_string( $attribute );
-		$query = "SELECT count( $attribute ) FROM trip";
+		$query = $db->escape_string( "SELECT $aggregate FROM trip" );
 
 		if ( strpos( $attribute, 'user.' ) === 0 )
 			$query .= " JOIN user ON user.id = trip.user_id";
 
 		$wheres = array();
-		if ( is_numeric( $attribute ) )
-			$wheres[] = "$attribute=" . intval( $value );
-		else
-			$wheres[] = "$attribute='" . $db->escape_string( $value ) . "'";
+
+		if ( $attribute ) {
+			$attribute = $db->escape_string( $attribute );
+			if ( is_numeric( $attribute ) )
+				$wheres[] = "$attribute=" . intval( $value );
+			else
+				$wheres[] = "$attribute='" . $db->escape_string( $value ) . "'";
+		}
+
 		if ( $after ) {
 			$date = new DateTime( $after );
 			$wheres[] = "start > '" . $date->format( 'Y-m-d H:i:s' ) ."'";
@@ -222,6 +250,10 @@ class TripFactory
 		$row = $result->fetch_row();
 		$result->close();
 
-		return intval( $row[0] );
+		return $row[0];
+	}
+
+	protected static function attributeTimeFrameWheres( $attribute, $value, $after = null, $before = null ) {
+
 	}
 }

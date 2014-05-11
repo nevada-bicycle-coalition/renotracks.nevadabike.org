@@ -4,24 +4,24 @@ include_once('TripFactory.php');
 $after = '2014-05-10';
 $before = '2014-05-17';
 
-$total = TripFactory::getTripCountByAttribute( 1, 1, $after, $before );
-$women = TripFactory::getTripCountByAttribute( 'user.gender', 1, $after, $before );
-$men = TripFactory::getTripCountByAttribute( 'user.gender', 2, $after, $before );
-$under18 = TripFactory::getTripCountByAttribute( 'user.age', 1, $after, $before );
-$eighteen24 = TripFactory::getTripCountByAttribute( 'user.age', 2, $after, $before );
-$twentyfive34 = TripFactory::getTripCountByAttribute( 'user.age', 3, $after, $before );
-$thirtyfive44 = TripFactory::getTripCountByAttribute( 'user.age', 4, $after, $before );
-$fourtyfive54 = TripFactory::getTripCountByAttribute( 'user.age', 5, $after, $before );
-$fiftyfive64 = TripFactory::getTripCountByAttribute( 'user.age', 6, $after, $before );
-$sixtyfiveup = TripFactory::getTripCountByAttribute( 'user.age', 7, $after, $before );
-$commute = TripFactory::getTripCountByAttribute( 'purpose', 'Commute', $after, $before );
-$errand = TripFactory::getTripCountByAttribute( 'purpose', 'Errand', $after, $before );
-$exercise = TripFactory::getTripCountByAttribute( 'purpose', 'Exercise', $after, $before );
-$work = TripFactory::getTripCountByAttribute( 'purpose', 'Work-Related', $after, $before );
-$school = TripFactory::getTripCountByAttribute( 'purpose', 'School', $after, $before );
-$shopping = TripFactory::getTripCountByAttribute( 'purpose', 'Shopping', $after, $before );
-$social = TripFactory::getTripCountByAttribute( 'purpose', 'Social', $after, $before );
-$other = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after, $before );
+$total = TripFactory::getTripMileage( $after, $before );
+$women = TripFactory::getTripMileageByAttribute( 'user.gender', 1, $after, $before );
+$men = TripFactory::getTripMileageByAttribute( 'user.gender', 2, $after, $before );
+$under18 = TripFactory::getTripMileageByAttribute( 'user.age', 1, $after, $before );
+$eighteen24 = TripFactory::getTripMileageByAttribute( 'user.age', 2, $after, $before );
+$twentyfive34 = TripFactory::getTripMileageByAttribute( 'user.age', 3, $after, $before );
+$thirtyfive44 = TripFactory::getTripMileageByAttribute( 'user.age', 4, $after, $before );
+$fourtyfive54 = TripFactory::getTripMileageByAttribute( 'user.age', 5, $after, $before );
+$fiftyfive64 = TripFactory::getTripMileageByAttribute( 'user.age', 6, $after, $before );
+$sixtyfiveup = TripFactory::getTripMileageByAttribute( 'user.age', 7, $after, $before );
+$commute = TripFactory::getTripMileageByAttribute( 'purpose', 'Commute', $after, $before );
+$errand = TripFactory::getTripMileageByAttribute( 'purpose', 'Errand', $after, $before );
+$exercise = TripFactory::getTripMileageByAttribute( 'purpose', 'Exercise', $after, $before );
+$work = TripFactory::getTripMileageByAttribute( 'purpose', 'Work-Related', $after, $before );
+$school = TripFactory::getTripMileageByAttribute( 'purpose', 'School', $after, $before );
+$shopping = TripFactory::getTripMileageByAttribute( 'purpose', 'Shopping', $after, $before );
+$social = TripFactory::getTripMileageByAttribute( 'purpose', 'Social', $after, $before );
+$other = TripFactory::getTripMileageByAttribute( 'purpose', 'Other', $after, $before );
 
 ?>
 <!DOCTYPE html>
@@ -73,7 +73,7 @@ $other = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after, $befo
 
 <section class="masthead">
 	<div class="container">
-		<h1>Trip counts for bike to work, school, fun week May 10-16</h1>
+		<h1>Miles tracked for bike to work, school, fun week May 10-16</h1>
 	</div>
 </section>
 
