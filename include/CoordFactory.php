@@ -84,6 +84,19 @@ class CoordFactory
 		return $db->query( $query );
 	}
 
+	public static function getCoordsInBoxCount( $swlat, $swlng, $nelat, $nelng ) {
+		$db = DatabaseConnectionFactory::getConnection();
+		$query = 'SELECT count(*) FROM coord WHERE ' . self::boxWhere( $swlat, $swlng, $nelat, $nelng );
+		$count = 0;
+		$result = $db->query( $query );
+		if ( $result ) {
+			$row = $result->fetch_row();
+			$count = intval( $row[0] );
+			$result->close();
+		}
+		return $count;
+	}
+
 	public static function getCoordsInBox( $swlat, $swlng, $nelat, $nelng ) {
 		$result = self::getCoordsInBoxResult( $swlat, $swlng, $nelat, $nelng );
 		$coords = array();

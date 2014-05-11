@@ -78,16 +78,17 @@ exit( 0 );
  * @return array metadata
  */
 function startMetaFile( $options ) {
-	$coords_result = CoordFactory::getCoordsInBoxResult( $options['sw_lat'], $options['sw_lng'], $options['ne_lat'], $options['ne_lng'] );
+	$coords_count = CoordFactory::getCoordsInBoxCount( $options['sw_lat'], $options['sw_lng'], $options['ne_lat'], $options['ne_lng'] );
 	$trip_id_result = CoordFactory::getTripIDsInBoxResult( $options['sw_lat'], $options['sw_lng'], $options['ne_lat'], $options['ne_lng'] );
 	$meta = $options + array(
 			'trip_count' => $trip_id_result->num_rows,
-			'coordinate_count' => $coords_result->num_rows,
+			'coordinate_count' => $coords_count,
 			'started' => date( 'c' ),
 		);
 	$trip_id_result->free();
-	$coords_result->free();
 
+	var_dump($meta);
+	die('meta');
 	if ( !file_exists( $options['tile_dir'] ) )
 		mkdir( $options['tile_dir'], 0705 );
 	file_put_contents( $options['tile_dir'] . 'meta.json', json_encode( $meta ) );
