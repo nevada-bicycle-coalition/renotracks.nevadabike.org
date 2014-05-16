@@ -52,17 +52,25 @@ class TripFactory
 	* Returns an empty array if no Trips are found.
 	**/
 	public static function getTripsByBoundingBox( $lat_center, $lat_maxdist, 
-		$long_center, $long_maxdist) 
+		$long_center, $long_maxdist, $after = null, $before = null )
 	{
-		$query = "SELECT distinct trip_id from coord where latitude>=" . ($lat_center-$lat_maxdist);
-		$query .= " and latitude<=" . ($lat_center+$lat_maxdist);
-		$query .= " and longitude>=" . ($long_center-$long_maxdist);
-		$query .= " and longitude<=" . ($long_center+$long_maxdist);
+		$query = "SELECT distinct trip_id from coord where latitude>=" . floatval($lat_center-$lat_maxdist);
+		$query .= " and latitude<=" . floatval($lat_center+$lat_maxdist);
+		$query .= " and longitude>=" . floatval($long_center-$long_maxdist);
+		$query .= " and longitude<=" . floatval($long_center+$long_maxdist);
+		if ( $after ) {
+			$date = new DateTime( $after );
+			$query .= " and recorded > '" . $date->format( 'Y-m-d H:i:s' ) ."'";
+		}
+		if ( $before ) {
+			$date = new DateTime( $before );
+			$query .= " and recorded < '" . $date->format( 'Y-m-d H:i:s' ) ."'";
+		}
 		$db = DatabaseConnectionFactory::getConnection();
-		$result = $db->query($db->escape_string($query));
+		$result = $db->query($query);
 
 		// no result, empty array
-		if ($result->num_rows == 0) { return array(); }
+		if ( !$result or $result->num_rows == 0) { return array(); }
 
 		$trips = array();
 		while ($trip_id = $result->fetch_array())
