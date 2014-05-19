@@ -173,6 +173,9 @@ a {
   font-size: 22px;
   margin-bottom: 20px;
 }
+.global_body .column h2 a {
+  text-decoration: none;
+}
 .global_body .column p {
   font-size: 14px;
   line-height: 1.6em;
