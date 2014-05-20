@@ -5,23 +5,41 @@ $after = '2014-05-10';
 $before = '2014-05-17';
 
 $total = TripFactory::getTripMileage( $after, $before );
+$total_count = TripFactory::getTripCount( $after, $before );
 $women = TripFactory::getTripMileageByAttribute( 'user.gender', 1, $after, $before );
+$women_count = TripFactory::getTripCountByAttribute( 'user.gender', 1, $after, $before );
 $men = TripFactory::getTripMileageByAttribute( 'user.gender', 2, $after, $before );
+$men_count = TripFactory::getTripCountByAttribute( 'user.gender', 2, $after, $before );
 $under18 = TripFactory::getTripMileageByAttribute( 'user.age', 1, $after, $before );
+$under18_count = TripFactory::getTripCountByAttribute( 'user.age', 1, $after, $before );
 $eighteen24 = TripFactory::getTripMileageByAttribute( 'user.age', 2, $after, $before );
+$eighteen24_count = TripFactory::getTripCountByAttribute( 'user.age', 2, $after, $before );
 $twentyfive34 = TripFactory::getTripMileageByAttribute( 'user.age', 3, $after, $before );
+$twentyfive34_count = TripFactory::getTripCountByAttribute( 'user.age', 3, $after, $before );
 $thirtyfive44 = TripFactory::getTripMileageByAttribute( 'user.age', 4, $after, $before );
+$thirtyfive44_count = TripFactory::getTripCountByAttribute( 'user.age', 4, $after, $before );
 $fourtyfive54 = TripFactory::getTripMileageByAttribute( 'user.age', 5, $after, $before );
+$fourtyfive54_count = TripFactory::getTripCountByAttribute( 'user.age', 5, $after, $before );
 $fiftyfive64 = TripFactory::getTripMileageByAttribute( 'user.age', 6, $after, $before );
+$fiftyfive64_count = TripFactory::getTripCountByAttribute( 'user.age', 6, $after, $before );
 $sixtyfiveup = TripFactory::getTripMileageByAttribute( 'user.age', 7, $after, $before );
+$sixtyfiveup_count = TripFactory::getTripCountByAttribute( 'user.age', 7, $after, $before );
 $commute = TripFactory::getTripMileageByAttribute( 'purpose', 'Commute', $after, $before );
+$commute_count = TripFactory::getTripCountByAttribute( 'purpose', 'Commute', $after, $before );
 $errand = TripFactory::getTripMileageByAttribute( 'purpose', 'Errand', $after, $before );
+$errand_count = TripFactory::getTripCountByAttribute( 'purpose', 'Errand', $after, $before );
 $exercise = TripFactory::getTripMileageByAttribute( 'purpose', 'Exercise', $after, $before );
+$exercise_count = TripFactory::getTripCountByAttribute( 'purpose', 'Exercise', $after, $before );
 $work = TripFactory::getTripMileageByAttribute( 'purpose', 'Work-Related', $after, $before );
+$work_count = TripFactory::getTripCountByAttribute( 'purpose', 'Work-Related', $after, $before );
 $school = TripFactory::getTripMileageByAttribute( 'purpose', 'School', $after, $before );
+$school_count = TripFactory::getTripCountByAttribute( 'purpose', 'School', $after, $before );
 $shopping = TripFactory::getTripMileageByAttribute( 'purpose', 'Shopping', $after, $before );
+$shopping_count = TripFactory::getTripCountByAttribute( 'purpose', 'Shopping', $after, $before );
 $social = TripFactory::getTripMileageByAttribute( 'purpose', 'Social', $after, $before );
+$social_count = TripFactory::getTripCountByAttribute( 'purpose', 'Social', $after, $before );
 $other = TripFactory::getTripMileageByAttribute( 'purpose', 'Other', $after, $before );
+$other_count = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after, $before );
 
 ?>
 <!DOCTYPE html>
@@ -81,19 +99,19 @@ $other = TripFactory::getTripMileageByAttribute( 'purpose', 'Other', $after, $be
 	<div class="span4">
 		<div class="well">
 			<p>Total</p>
-			<p><span class="stat"><?php echo $total; ?></span></p>
+			<p><span class="stat" title="<?php echo $total_count; ?> trips"><?php echo $total; ?></span></p>
 		</div>
 	</div>
 	<div class="span4">
 		<div class="well">
 			<p>Women</p>
-			<p><span class="stat"><?php echo $women; ?></span></p>
+			<p><span class="stat" title="<?php echo $women_count; ?> trips"><?php echo $women; ?></span></p>
 		</div>
 	</div>
 	<div class="span4">
 		<div class="well">
 			<p>Men</p>
-			<p><span class="stat"><?php echo $men; ?></span></p>
+			<p><span class="stat" title="<?php echo $men_count; ?> trips"><?php echo $men; ?></span></p>
 		</div>
 	</div>
 </section>
@@ -102,19 +120,19 @@ $other = TripFactory::getTripMileageByAttribute( 'purpose', 'Other', $after, $be
 	<div class="span4">
 		<div class="well">
 			<p>Under 18</p>
-			<p><span class="stat"><?php echo $under18; ?></span></p>
+			<p><span class="stat" title="<?php echo $under18_count; ?> trips"><?php echo $under18; ?></span></p>
 		</div>
 	</div>
 	<div class="span4">
 		<div class="well">
 			<p>18-24</p>
-			<p><span class="stat"><?php echo $eighteen24; ?></span></p>
+			<p><span class="stat" title="<?php echo $eighteen24_count; ?> trips"><?php echo $eighteen24; ?></span></p>
 		</div>
 	</div>
 	<div class="span4">
 		<div class="well">
 			<p>25-34</p>
-			<p><span class="stat"><?php echo $twentyfive34; ?></span></p>
+			<p><span class="stat" title="<?php echo $twentyfive34_count; ?> trips"><?php echo $twentyfive34; ?></span></p>
 		</div>
 	</div>
 </section>
@@ -123,19 +141,19 @@ $other = TripFactory::getTripMileageByAttribute( 'purpose', 'Other', $after, $be
 	<div class="span4">
 		<div class="well">
 			<p>35-44</p>
-			<p><span class="stat"><?php echo $thirtyfive44; ?></span></p>
+			<p><span class="stat" title="<?php echo $thirtyfive44_count; ?> trips"><?php echo $thirtyfive44; ?></span></p>
 		</div>
 	</div>
 	<div class="span4">
 		<div class="well">
 			<p>45-54</p>
-			<p><span class="stat"><?php echo $fourtyfive54; ?></span></p>
+			<p><span class="stat" title="<?php echo $fourtyfive54_count; ?> trips"><?php echo $fourtyfive54; ?></span></p>
 		</div>
 	</div>
 	<div class="span4">
 		<div class="well">
 			<p>55-64</p>
-			<p><span class="stat"><?php echo $fiftyfive64; ?></span></p>
+			<p><span class="stat" title="<?php echo $fiftyfive64_count; ?> trips"><?php echo $fiftyfive64; ?></span></p>
 		</div>
 	</div>
 </section>
@@ -144,19 +162,19 @@ $other = TripFactory::getTripMileageByAttribute( 'purpose', 'Other', $after, $be
 	<div class="span4">
 		<div class="well">
 			<p>65+</p>
-			<p><span class="stat"><?php echo $sixtyfiveup; ?></span></p>
+			<p><span class="stat" title="<?php echo $sixtyfiveup_count; ?> trips"><?php echo $sixtyfiveup; ?></span></p>
 		</div>
 	</div>
 	<div class="span4">
 		<div class="well">
 			<p>Commute</p>
-			<p><span class="stat"><?php echo $commute; ?></span></p>
+			<p><span class="stat" title="<?php echo $commute_count; ?> trips"><?php echo $commute; ?></span></p>
 		</div>
 	</div>
 	<div class="span4">
 		<div class="well">
 			<p>Errand</p>
-			<p><span class="stat"><?php echo $errand; ?></span></p>
+			<p><span class="stat" title="<?php echo $errand_count; ?> trips"><?php echo $errand; ?></span></p>
 		</div>
 	</div>
 </section>
@@ -165,19 +183,19 @@ $other = TripFactory::getTripMileageByAttribute( 'purpose', 'Other', $after, $be
 	<div class="span4">
 		<div class="well">
 			<p>Exercise</p>
-			<p><span class="stat"><?php echo $exercise; ?></span></p>
+			<p><span class="stat" title="<?php echo $exercise_count; ?> trips"><?php echo $exercise; ?></span></p>
 		</div>
 	</div>
 	<div class="span4">
 		<div class="well">
 			<p>School</p>
-			<p><span class="stat"><?php echo $school; ?></span></p>
+			<p><span class="stat" title="<?php echo $school_count; ?> trips"><?php echo $school; ?></span></p>
 		</div>
 	</div>
 	<div class="span4">
 		<div class="well">
 			<p>Social</p>
-			<p><span class="stat"><?php echo $social; ?></span></p>
+			<p><span class="stat" title="<?php echo $social_count; ?> trips"><?php echo $social; ?></span></p>
 		</div>
 	</div>
 </section>
@@ -186,18 +204,18 @@ $other = TripFactory::getTripMileageByAttribute( 'purpose', 'Other', $after, $be
 	<div class="span4">
 		<div class="well">
 			<p>Work-Related</p>
-			<p><span class="stat"><?php echo $work; ?></span></p>
+			<p><span class="stat" title="<?php echo $work_count; ?> trips"><?php echo $work; ?></span></p>
 		</div>
 	</div>
 	<div class="span4">
 		<div class="well">
 			<p>Other</p>
-			<p><span class="stat"><?php echo $other; ?></span></p>
+			<p><span class="stat" title="<?php echo $other_count; ?> trips"><?php echo $other; ?></span></p>
 		</div>
 	</div>
 	<div class="span4">
 		<div class="well">
-			<p>Pump up those numbers! Also check out the <a href="http://bikenevada.org">Commuter Challenge!</a></p>
+			<p>Good work! That's over 10% of the total for the  <a href="http://bikenevada.org">Commuter Challenge!</a></p>
 		</div>
 	</div>
 </section>
