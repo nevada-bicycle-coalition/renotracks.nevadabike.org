@@ -29,7 +29,7 @@ $long_options = array_map( function ( $name ) {
 	return $name . '::';
 }, array_keys( $defaults ) );
 
-$options = getopt( '', $long_options );
+$options = getopt( 'v', $long_options );
 foreach ( $defaults as $name => $value ) {
 	if ( isset( $options[$name] ) ) {
 		if ( is_bool( $defaults[$name] ) )
@@ -47,8 +47,13 @@ $meta = startMetaFile( $options );
 $from_tile = GoogleMapUtility::getTileXY( $options['ne_lat'], $options['sw_lng'], $options['start_zoom'] );
 $to_tile = GoogleMapUtility::getTileXY( $options['sw_lat'], $options['ne_lng'], $options['start_zoom'] );
 
+$count = 0;
+$total = ( $to_tile->x - $from_tile->x ) * ( $to_tile->y - $from_tile->y );
 for ( $x = $from_tile->x; $x <= $to_tile->x; $x += 1 ) {
 	for ( $y = $from_tile->y; $y <= $to_tile->y; $y += 1 ) {
+		$count++;
+		if ( isset( $options['v'] ) )
+			echo 'Making tile ' . $count . ' of ' . $total . "\n";
 		makeGrayscaleTiles( $x, $y, $options['start_zoom'], $options );
 	}
 }
@@ -174,7 +179,6 @@ function drawOnTile( $coords, $x, $y, $zoom, $args ) {
 	if ( !file_exists( $y_dir ) ) {
 		mkdir( $y_dir, 0705 );
 	}
-	echo "Creating $tilename...\n";
 	flush();
 
 	$dimming = Max( 1, Min( 255, $args['spot_dimming'] ) );
