@@ -59,7 +59,7 @@ $config_json = json_encode( $config );
 			<ul class="nav">
 				<li><a href="/">Home</a></li>
 				<li class="active"><a href=".">Map</a></li>
-				<li class="tally.php"><a href="tally.php">Bike to Work Week</a></li>
+				<li class="tally.php"><a href="tally.php">Tallies</a></li>
 			</ul>
 
 		</div>

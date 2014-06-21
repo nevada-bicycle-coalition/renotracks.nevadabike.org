@@ -1,8 +1,8 @@
 <?php
 set_include_path( dirname( dirname( dirname( __FILE__ ) ) ) . '/include' . PATH_SEPARATOR . get_include_path() );
 include_once('TripFactory.php');
-$after = '2014-05-10';
-$before = '2014-05-17';
+$after = null;
+$before = null;
 
 $total = TripFactory::getTripMileage( $after, $before );
 $total_count = TripFactory::getTripCount( $after, $before );
@@ -82,7 +82,7 @@ $other_count = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after,
 			<ul class="nav">
 				<li><a href="/">Home</a></li>
 				<li><a href="/routes/">Map</a></li>
-				<li class="active"><a href=".">Bike to Work Week</a></li>
+				<li class="active"><a href=".">Tallies</a></li>
 			</ul>
 
 		</div>
@@ -91,7 +91,7 @@ $other_count = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after,
 
 <section class="masthead">
 	<div class="container">
-		<h1>Miles tracked for bike to work, school, fun week May 10-16</h1>
+		<h1>Miles tracked by RenoTracks</h1>
 	</div>
 </section>
 
@@ -215,7 +215,7 @@ $other_count = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after,
 	</div>
 	<div class="span4">
 		<div class="well">
-			<p>Good work! That's over 10% of the total for the  <a href="http://bikenevada.org">Commuter Challenge!</a></p>
+			<p>Nice work. Keep tracking!</p>
 		</div>
 	</div>
 </section>
