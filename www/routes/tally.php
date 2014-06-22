@@ -54,7 +54,7 @@ $other_count = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after,
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>RenoTracks Bike To Work Week Stats</title>
+	<title>RenoTracks Stats</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width">
 
