@@ -215,7 +215,7 @@ $other_count = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after,
 	</div>
 	<div class="span4">
 		<div class="well">
-			<p>Nice work. Keep tracking!</p>
+			<p>KEEP CALM AND TRACK ON</p>
 		</div>
 	</div>
 </section>
