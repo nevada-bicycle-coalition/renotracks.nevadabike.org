@@ -23,7 +23,7 @@ $defaults = array(
 	'spot_radius' => 0,
 	'spot_dimming' => 75,
 	'tile_size_factor' => 0.5,
-	'zero_radius_final_zoom' => 18,
+	'zero_radius_final_zoom' => 19,
 );
 $long_options = array_map( function ( $name ) {
 	return $name . '::';
