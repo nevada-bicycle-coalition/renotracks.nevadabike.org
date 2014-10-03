@@ -194,10 +194,10 @@ INSERT INTO rider_history (id, text) VALUES (4, "Just trying it out / just start
 INSERT INTO note_type (id, text) VALUES (0, 'Pavement issue');
 INSERT INTO note_type (id, text) VALUES (1, 'Traffic signal');
 INSERT INTO note_type (id, text) VALUES (2, 'Enforcement');
-INSERT INTO note_type (id, text) VALUES (3, 'Rack Em Up - park now' );
+INSERT INTO note_type (id, text) VALUES (3, 'Rack Em Up - park future' );
 INSERT INTO note_type (id, text) VALUES (4, 'Bike lane issue');
 INSERT INTO note_type (id, text) VALUES (5, 'Note this issue');
-INSERT INTO note_type (id, text) VALUES (6, 'Rack Em Up - park future');
+INSERT INTO note_type (id, text) VALUES (6, 'Rack Em Up - park now');
 INSERT INTO note_type (id, text) VALUES (7, 'Bike shops');
 INSERT INTO note_type (id, text) VALUES (8, 'Public restrooms');
 INSERT INTO note_type (id, text) VALUES (9, 'Secret passage');
