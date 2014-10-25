@@ -21,9 +21,11 @@ $config_json = json_encode( $config );
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width">
 
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"/>
 	<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+	<link rel="stylesheet" href="css/leaflet.awesome-markers.css">
 	<link rel="stylesheet" href="css/main.css">
 
 	<script type="text/javascript">
@@ -99,6 +101,7 @@ $config_json = json_encode( $config );
 <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
 
 <script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/vendor/leaflet.awesome-markers.js"></script>
 
 <script src="js/main.js?v=20140228"></script>
 
