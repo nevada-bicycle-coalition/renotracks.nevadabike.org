@@ -8,7 +8,7 @@ $ vagrant up
 
 Run that in the same directory as this file.
 
-We have an issue where varnish doesn't install on the try, sigh. Reprovision:
+We have an issue where varnish doesn't install on the first try, sigh. Reprovision:
 
 ```
 $ vagrant provision
