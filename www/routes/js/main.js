@@ -111,6 +111,27 @@ var Trips ={
 		});
 		return self.data;
 	},
+	fetchNotes: function() {
+		var self = Trips;
+		$.ajax({
+			url: 'noteData.php',
+			type: 'GET',
+			data: {
+				t:'get_notes'
+				},
+			dataType: 'json',
+			cache: true,
+			success: function(results) {
+				self.notes = results;
+				results.forEach(function (result) {
+					result.marker = self.generateMarker(result)
+				})
+
+
+			}
+		});
+		return self.notes;
+	},
 	attachPolyline: function() {
 		var latlng,
 			polyline,
@@ -132,6 +153,87 @@ var Trips ={
 		}
 		$('.trip_count').text(this.tripCount++);
 		$('.user_count').text(this.userCount);
+	},
+	generateMarker: function (note) {
+	//	(0, 'Pavement issue');
+	//	(1, 'Traffic signal');
+	//	(2, 'Enforcement');
+	//	(3, 'Rack Em Up - park future' );
+	//	(4, 'Bike lane issue');
+	//	(5, 'Note this issue');
+	//	(6, 'Rack Em Up - park now');
+	//	(7, 'Bike shops');
+	//	(8, 'Public restrooms');
+	//	(9, 'Secret passage');
+	//	(10, 'Water fountain');
+	//	(11, 'Note this asset');
+		var marker_location = new L.LatLng( note.latitude, note.longitude, note.altitude );
+
+		var icon_data = {}
+		switch(note.note_type) {
+    case '0': //Pavement Issue
+				icon_data = {icon: 'road', markerColor: 'blue'}
+				note["title"] = "Pavement Issue"
+				break;
+		case '1': //Traffic Signal
+				icon_data = {icon: 'car', markerColor: 'blue'}
+				note["title"] = "Traffic Signal"
+				break;
+		case '2': //Enforcement
+				icon_data = {icon: 'warning', markerColor: 'blue'}
+				note["title"] = "Enforcement"
+				break;
+		case '3': //Rack Em Up - Future
+				icon_data = {icon: 'frown-o', markerColor: 'blue'}
+				note["title"] = "Rack Em Up - Future"
+				break;
+		case '4': //Bike Lane Issue
+				icon_data = {icon: 'truck', markerColor: 'blue'}
+				note["title"] = "Bike Lane Issue"
+				break;
+		case '5': //Note this issue
+				icon_data = {icon: 'question', markerColor: 'blue'}
+				note["title"] = "Note This Issue"
+				break;
+		case '6': //Rack Em Up - now
+				icon_data = {icon: 'smile-o', markerColor: 'blue'}
+				note["title"] = "Rack Em up - Now"
+				break;
+		case '7': //Bike Lane Issue
+				icon_data = {icon: 'bicycle', markerColor: 'green'}
+				note["title"] = "Bike Shop"
+				break;
+		case '8': //Public Restrooms
+				icon_data = {icon: 'users', markerColor: 'blue'}
+				note["title"] = "Public Restroom"
+				break;
+		case '9': //Secret Passage
+				icon_data = {icon: 'thumbs-o-up', markerColor: 'blue'}
+				note["title"] = "Secret Passage"
+				break;
+		case '10': //Water Fountain
+				icon_data = {icon: 'tint', markerColor: 'blue'}
+				note["title"] = "Water Fountain"
+				break;
+		case '11': //Note this asset
+				icon_data = {icon: 'eye', markerColor: 'blue'}
+				note["title"] = "Note This Asset"
+				break;
+    default:
+				icon_data = {icon: 'tags', markerColor: 'red'}
+				note["title"] = "Unknown"
+				break;
+		}
+
+		icon_data['prefix'] = 'fa'
+
+		var icon = L.AwesomeMarkers.icon(icon_data);
+		var marker = L.marker(marker_location, {icon: icon})
+		var popup = "<b>"+note.title+"</b>"
+		if(note.details != "")
+			popup += "<br>details: "+ note.details
+		marker.bindPopup(popup)
+		return marker
 	}
 }
 
@@ -149,6 +251,18 @@ jQuery( '.btn.trips' ).button('toggle').on( 'click', function() {
 		tripTileLayer.setOpacity(0);
 	} else {
 		tripTileLayer.setOpacity(1);
+	}
+} );
+
+jQuery( '.btn.notes' ).button('toggle').on( 'click', function() {
+	if ( $(this).hasClass( 'active' ) ) {
+		Trips.notes.forEach(function (note) {
+			note.marker.addTo(map)
+		})
+	} else {
+		Trips.notes.forEach(function (note) {
+			map.removeLayer(note.marker)
+		})
 	}
 } );
 

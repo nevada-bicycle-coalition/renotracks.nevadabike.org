@@ -78,6 +78,7 @@ $config_json = json_encode( $config );
 		<div id="map_controls" class="section">
 			<button type="button" data-toggle="button" class="btn trips">Trips</button>
 			<button type="button" data-toggle="button" class="btn streets">Streets</button>
+			<button type="button" data-toggle="button" class="btn notes">Notes</button>
 			<br/>
 			<button type="button" class="btn rtc">Bike Lanes and More</button>
 		</div>
