@@ -14,6 +14,12 @@ We have an issue where varnish doesn't install on the try, sigh. Reprovision:
 $ vagrant provision
 ```
 
+You can get a shell on the VM:
+
+```
+$ vagrant ssh
+```
+
 Add an entry to your [hosts file][1] to reach the web server
 
 ```
@@ -22,7 +28,13 @@ Add an entry to your [hosts file][1] to reach the web server
 
 [1]:http://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/
 
-Now http://renotracks.dev should serve up the app. When finished
+Now http://renotracks.dev should serve up the app. 
+
+If you get a 502 Gateway error, it's probably this issue:
+
+http://stackoverflow.com/questions/23443398/nginx-error-connect-to-php5-fpm-sock-failed-13-permission-denied
+
+When finished
 
 ```
 $ vagrant halt
