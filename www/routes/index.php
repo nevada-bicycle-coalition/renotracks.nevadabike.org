@@ -109,6 +109,7 @@ $config_json = json_encode( $config );
 <script type="text/javascript">
 	(function () {
 		Trips.init( <?php echo $config_json; ?> );
+		Trips.fetchNotes()
 	})();
 </script>
 </body>
