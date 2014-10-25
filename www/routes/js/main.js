@@ -51,6 +51,7 @@ var Trips ={
 			this.config.lineOpacity = 0.05;
 			this.fetchTileMeta();
 		}
+		this.fetchNotes()
 	},
 	fetchTileMeta: function() {
 		$.ajax({
@@ -229,10 +230,16 @@ var Trips ={
 
 		var icon = L.AwesomeMarkers.icon(icon_data);
 		var marker = L.marker(marker_location, {icon: icon})
-		var popup = "<b>"+note.title+"</b>"
+		var popup_html = "<b>"+note.title+"</b>"
 		if(note.details != "")
-			popup += "<br>details: "+ note.details
-		marker.bindPopup(popup)
+		{
+			popup_html += "<br>details: "+ note.details
+		}
+		if(note.image_url !== "")
+		{
+      popup_html += '<br><img src="image.php?name='+note.image_url+'" style="width: 200px"/>'
+		}
+		marker.bindPopup(popup_html)
 		return marker
 	}
 }
