@@ -81,7 +81,22 @@ class NoteFactory
 
 		return $trip;
 	}
-	
+
+	public static function getNotes(){
+		$db = DatabaseConnectionFactory::getConnection();
+		$trip_ids = array();
+
+		$query = "SELECT * FROM note";
+
+		$result = $db->query( $query );
+		while ( $trip = $result->fetch_object( self::$class ) )
+				$trip_ids[] = $trip;
+
+		$result->close();
+
+		return json_encode($trip_ids);
+	}
+
 	public static function getNoteByUserStart( $user_id, $recorded )
 	{
 		$db = DatabaseConnectionFactory::getConnection();
