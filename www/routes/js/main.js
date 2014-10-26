@@ -154,81 +154,65 @@ var Trips ={
 		$('.user_count').text(this.userCount);
 	},
 	generateMarker: function (note) {
-	//	(0, 'Pavement issue');
-	//	(1, 'Traffic signal');
-	//	(2, 'Enforcement');
-	//	(3, 'Rack Em Up - park future' );
-	//	(4, 'Bike lane issue');
-	//	(5, 'Note this issue');
-	//	(6, 'Rack Em Up - park now');
-	//	(7, 'Bike shops');
-	//	(8, 'Public restrooms');
-	//	(9, 'Secret passage');
-	//	(10, 'Water fountain');
-	//	(11, 'Note this asset');
 		var marker_location = new L.LatLng( note.latitude, note.longitude, note.altitude );
 
-		var icon_data = {}
-		switch(note.note_type) {
-    case '0': //Pavement Issue
-				icon_data = {icon: 'road', markerColor: 'blue'}
-				note["title"] = "Pavement Issue"
-				break;
-		case '1': //Traffic Signal
-				icon_data = {icon: 'car', markerColor: 'blue'}
-				note["title"] = "Traffic Signal"
-				break;
-		case '2': //Enforcement
-				icon_data = {icon: 'warning', markerColor: 'blue'}
-				note["title"] = "Enforcement"
-				break;
-		case '3': //Rack Em Up - Future
-				icon_data = {icon: 'frown-o', markerColor: 'blue'}
-				note["title"] = "Rack Em Up - Future"
-				break;
-		case '4': //Bike Lane Issue
-				icon_data = {icon: 'truck', markerColor: 'blue'}
-				note["title"] = "Bike Lane Issue"
-				break;
-		case '5': //Note this issue
-				icon_data = {icon: 'exclamation', markerColor: 'beige'}
-				note["title"] = "Note This Issue"
-				break;
-		case '6': //Rack Em Up - now
-				icon_data = {icon: 'smile-o', markerColor: 'blue'}
-				note["title"] = "Rack Em Up - Now"
-				break;
-		case '7': //Bike Lane Issue
-				icon_data = {icon: 'bicycle', markerColor: 'green'}
-				note["title"] = "Bike Shop"
-				break;
-		case '8': //Public Restrooms
-				icon_data = {icon: 'users', markerColor: 'blue'}
-				note["title"] = "Public Restroom"
-				break;
-		case '9': //Secret Passage
-				icon_data = {icon: 'thumbs-o-up', markerColor: 'blue'}
-				note["title"] = "Secret Passage"
-				break;
-		case '10': //Water Fountain
-				icon_data = {icon: 'tint', markerColor: 'blue'}
-				note["title"] = "Water Fountain"
-				break;
-		case '11': //Note this asset
-				icon_data = {icon: 'eye', markerColor: 'blue'}
-				note["title"] = "Note This Asset"
-				break;
-    default:
-				icon_data = {icon: 'tags', markerColor: 'red'}
-				note["title"] = "Unknown"
-				break;
-		}
+		var note_source = [
+			{
+				icon_data: {icon: 'road', markerColor:'blue'},
+				title: "Pavement Issue"
+			},
+			{
+				icon_data: {icon: 'car', markerColor:'blue'},
+				title: "Traffic Signal"
+			},
+			{
+				icon_data: {icon: 'warning', markerColor:'blue'},
+				title: "Enforcement"
+			},
+			{
+				icon_data: {icon: 'frown-o', markerColor:'blue'},
+				title: "Rack Em Up - Future"
+			},
+			{
+				icon_data: {icon: 'truck', markerColor:'blue'},
+				title: "Bike Lane Issue"
+			},
+			{
+				icon_data: {icon: 'exclamation', markerColor:'beige'},
+				title: "Note This Issue"
+			},
+			{
+				icon_data: {icon: 'smile-o', markerColor:'blue'},
+				title: "Rack Em Up - Now"
+			},
+			{
+				icon_data: {icon: 'bicycle', markerColor:'green'},
+				title: "Bike Shop"
+			},
+			{
+				icon_data: {icon: 'users', markerColor:'blue'},
+				title: "Public Restroom"
+			},
+			{
+				icon_data: {icon: 'thumbs-o-up', markerColor:'blue'},
+				title: "Secret Passage"
+			},
+			{
+				icon_data: {icon: 'tint', markerColor:'blue'},
+				title: "Water Fountain"
+			},
+			{
+				icon_data: {icon: 'eye', markerColor:'blue'},
+				title: "Note This Asset"
+			}
+		]
+		note_data = note_source[note.note_type];
 
-		icon_data['prefix'] = 'fa'
+		note_data.icon_data['prefix'] = 'fa'
 
-		var icon = L.AwesomeMarkers.icon(icon_data);
+		var icon = L.AwesomeMarkers.icon(note_data.icon_data);
 		var marker = L.marker(marker_location, {icon: icon})
-		var popup_html = "<b>"+note.title+"</b>"
+		var popup_html = "<b>"+note_data.title+"</b>"
 		if(note.details != "")
 		{
 			popup_html += "<br>details: "+ note.details
@@ -270,6 +254,50 @@ jQuery( '.btn.notes' ).on( 'click', function() {
 	})
 	}
 } );
+
+jQuery( '.btn.parks' ).on( 'click', function() {
+	if ( $(this).hasClass( 'active' ) ) {
+		map.removeLayer(parks_layer)
+	} else {
+		parks_layer.addTo(map)
+	}
+} );
+
+var funParkMarker = {
+    radius: 8,
+    fillColor: "#2ca02c",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
+var parkMarker = {
+		radius: 5,
+		fillColor: "#2ca02c",
+		color: "#000",
+		weight: 1,
+		opacity: 1,
+		fillOpacity: 0.8
+};
+
+var parks_url = "js/parks.json"
+var parks_layer;
+jQuery.getJSON(parks_url, function(data) {
+	parks_layer = new L.GeoJSON (data, {
+    pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, feature.properties.Trails ? funParkMarker : parkMarker);
+    },
+		onEachFeature: function (feature, layer) {
+	  	var popup = "<b>"+feature.properties["Park Name"]+"</b>"
+			popup+= '<br><i class="fa '+(feature.properties.Trails ? 'fa-check-square-o':'fa-square-o') +'"></i> Bike Trails'
+			popup+= '<br><i class="fa '+(feature.properties["Drinking Fountain"] ? 'fa-check-square-o':'fa-square-o') +'"></i> Drinking Fountain'
+			//popup += '<br><i class="' + (feature.properties.Trails ? "fa-check-square-o" : "fa-square-o") + '"></i> Bike Trails'
+			popup += "<br>"+feature.properties.Description
+			layer.bindPopup(popup);
+		}
+	})
+})
 
 jQuery( '.btn.rtc' ).on( 'click', function() {
 	var rtc_url = "js/reno-improvements.json";

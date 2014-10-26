@@ -80,6 +80,7 @@ $config_json = json_encode( $config );
 			<button type="button" data-toggle="button" class="btn trips">Trips</button>
 			<button type="button" data-toggle="button" class="btn streets">Streets</button>
 			<button type="button" data-toggle="button" class="btn notes">Notes</button>
+			<button type="button" data-toggle="button" class="btn parks">Parks</button>
 			<br/>
 			<button type="button" class="btn rtc">Bike Lanes and More</button>
 		</div>
