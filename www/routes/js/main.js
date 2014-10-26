@@ -259,15 +259,15 @@ jQuery( '.btn.trips' ).button('toggle').on( 'click', function() {
 	}
 } );
 
-jQuery( '.btn.notes' ).button('toggle').on( 'click', function() {
+jQuery( '.btn.notes' ).on( 'click', function() {
 	if ( $(this).hasClass( 'active' ) ) {
 		Trips.notes.forEach(function (note) {
-			note.marker.addTo(map)
-		})
+			map.removeLayer(note.marker)
+	})
 	} else {
 		Trips.notes.forEach(function (note) {
-			map.removeLayer(note.marker)
-		})
+			note.marker.addTo(map)
+	})
 	}
 } );
 
