@@ -12,6 +12,7 @@ Ignore a few red lines of output:
 
 ```
 ==> default: stdin: is not a tty
+==> default: dpkg-preconfigure: unable to re-open stdin: No such file or directory
 ```
 
 You can get a shell on the VM:
