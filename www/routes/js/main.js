@@ -235,7 +235,7 @@ var Trips ={
 		}
 		if(note.image_url !== "")
 		{
-      popup_html += '<br><a href="image.php?name='+note.image_url+'" data-lightbox="image-'+note.id+'"><img src="image.php?name='+note.image_url+'" style="width: 200px"/></a>'
+      popup_html += '<br><a href="image.php?name='+note.image_url+'" data-lightbox="image-'+note.id+'"><img src="image.php?name='+note.image_url+'&size=thumb" style="width: 200px"/></a>'
 		}
 		marker.bindPopup(popup_html)
 		return marker
