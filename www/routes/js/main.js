@@ -290,9 +290,8 @@ jQuery.getJSON(parks_url, function(data) {
     },
 		onEachFeature: function (feature, layer) {
 	  	var popup = "<b>"+feature.properties["Park Name"]+"</b>"
-			popup+= '<br><i class="fa '+(feature.properties.Trails ? 'fa-check-square-o fa-fw':'fa-square-o fa-fw') +'"></i> Bike Trails'
-			popup+= '<br><i class="fa '+(feature.properties["Drinking Fountain"] ? 'fa-check-square-o fa-fw':'fa-square-o fa-fw') +'"></i> Drinking Fountain'
-			//popup += '<br><i class="' + (feature.properties.Trails ? "fa-check-square-o" : "fa-square-o") + '"></i> Bike Trails'
+			popup+= '<br>'+(feature.properties.Trails ? '<i class="fa fa-check-square-o"></i>':'No') +' Bike Trails'
+			popup+= '<br>'+(feature.properties["Drinking Fountain"] ? '<i class="fa fa-check-square-o"></i>':'No') +' Drinking Fountain'
 			popup += "<br>"+feature.properties.Description
 			layer.bindPopup(popup);
 		}
