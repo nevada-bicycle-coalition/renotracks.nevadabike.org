@@ -191,7 +191,7 @@ var Trips ={
 				note["title"] = "Bike Lane Issue"
 				break;
 		case '5': //Note this issue
-				icon_data = {icon: 'exclamation', markerColor: 'yellow'}
+				icon_data = {icon: 'exclamation', markerColor: 'beige'}
 				note["title"] = "Note This Issue"
 				break;
 		case '6': //Rack Em Up - now
