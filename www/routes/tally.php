@@ -60,7 +60,6 @@ $other_count = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after,
 
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"/>
-	<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
 	<link rel="stylesheet" href="css/main.css">
 
 </head>
@@ -73,21 +72,26 @@ $other_count = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after,
 
 <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
 
-<div class="navbar navbar-inverse navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="container">
-
-			<span class="brand">RenoTracks</span>
-
-			<ul class="nav">
+<nav class="navbar navbar-inverse" role="navigation">
+	<div class="container-fluid">
+		<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">RenoTracks</a>
+			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
 				<li><a href="/">Home</a></li>
-				<li><a href="/routes/">Map</a></li>
-				<li class="active"><a href=".">Tallies</a></li>
+				<li><a href=".">Map</a></li>
+				<li class="active"><a href="tally.php">Tallies</a></li>
 			</ul>
-
-		</div>
+			</div>
 	</div>
-</div>
+</nav>
 
 <section class="masthead">
 	<div class="container">
@@ -96,19 +100,19 @@ $other_count = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after,
 </section>
 
 <section class="stats row-fluid">
-	<div class="span4">
+	<div class="col-md-4">
 		<div class="well">
 			<p>Total</p>
 			<p><span class="stat" title="<?php echo $total_count; ?> trips"><?php echo $total; ?></span></p>
 		</div>
 	</div>
-	<div class="span4">
+	<div class="col-md-4">
 		<div class="well">
 			<p>Women</p>
 			<p><span class="stat" title="<?php echo $women_count; ?> trips"><?php echo $women; ?></span></p>
 		</div>
 	</div>
-	<div class="span4">
+	<div class="col-md-4">
 		<div class="well">
 			<p>Men</p>
 			<p><span class="stat" title="<?php echo $men_count; ?> trips"><?php echo $men; ?></span></p>
@@ -117,19 +121,19 @@ $other_count = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after,
 </section>
 
 <section class="stats row-fluid">
-	<div class="span4">
+	<div class="col-md-4">
 		<div class="well">
 			<p>Under 18</p>
 			<p><span class="stat" title="<?php echo $under18_count; ?> trips"><?php echo $under18; ?></span></p>
 		</div>
 	</div>
-	<div class="span4">
+	<div class="col-md-4">
 		<div class="well">
 			<p>18-24</p>
 			<p><span class="stat" title="<?php echo $eighteen24_count; ?> trips"><?php echo $eighteen24; ?></span></p>
 		</div>
 	</div>
-	<div class="span4">
+	<div class="col-md-4">
 		<div class="well">
 			<p>25-34</p>
 			<p><span class="stat" title="<?php echo $twentyfive34_count; ?> trips"><?php echo $twentyfive34; ?></span></p>
@@ -138,19 +142,19 @@ $other_count = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after,
 </section>
 
 <section class="stats row-fluid">
-	<div class="span4">
+	<div class="col-md-4">
 		<div class="well">
 			<p>35-44</p>
 			<p><span class="stat" title="<?php echo $thirtyfive44_count; ?> trips"><?php echo $thirtyfive44; ?></span></p>
 		</div>
 	</div>
-	<div class="span4">
+	<div class="col-md-4">
 		<div class="well">
 			<p>45-54</p>
 			<p><span class="stat" title="<?php echo $fourtyfive54_count; ?> trips"><?php echo $fourtyfive54; ?></span></p>
 		</div>
 	</div>
-	<div class="span4">
+	<div class="col-md-4">
 		<div class="well">
 			<p>55-64</p>
 			<p><span class="stat" title="<?php echo $fiftyfive64_count; ?> trips"><?php echo $fiftyfive64; ?></span></p>
@@ -159,19 +163,19 @@ $other_count = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after,
 </section>
 
 <section class="stats row-fluid">
-	<div class="span4">
+	<div class="col-md-4">
 		<div class="well">
 			<p>65+</p>
 			<p><span class="stat" title="<?php echo $sixtyfiveup_count; ?> trips"><?php echo $sixtyfiveup; ?></span></p>
 		</div>
 	</div>
-	<div class="span4">
+	<div class="col-md-4">
 		<div class="well">
 			<p>Commute</p>
 			<p><span class="stat" title="<?php echo $commute_count; ?> trips"><?php echo $commute; ?></span></p>
 		</div>
 	</div>
-	<div class="span4">
+	<div class="col-md-4">
 		<div class="well">
 			<p>Errand</p>
 			<p><span class="stat" title="<?php echo $errand_count; ?> trips"><?php echo $errand; ?></span></p>
@@ -180,19 +184,19 @@ $other_count = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after,
 </section>
 
 <section class="stats row-fluid">
-	<div class="span4">
+	<div class="col-md-4">
 		<div class="well">
 			<p>Exercise</p>
 			<p><span class="stat" title="<?php echo $exercise_count; ?> trips"><?php echo $exercise; ?></span></p>
 		</div>
 	</div>
-	<div class="span4">
+	<div class="col-md-4">
 		<div class="well">
 			<p>School</p>
 			<p><span class="stat" title="<?php echo $school_count; ?> trips"><?php echo $school; ?></span></p>
 		</div>
 	</div>
-	<div class="span4">
+	<div class="col-md-4">
 		<div class="well">
 			<p>Social</p>
 			<p><span class="stat" title="<?php echo $social_count; ?> trips"><?php echo $social; ?></span></p>
@@ -201,19 +205,19 @@ $other_count = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after,
 </section>
 
 <section class="stats row-fluid">
-	<div class="span4">
+	<div class="col-md-4">
 		<div class="well">
 			<p>Work-Related</p>
 			<p><span class="stat" title="<?php echo $work_count; ?> trips"><?php echo $work; ?></span></p>
 		</div>
 	</div>
-	<div class="span4">
+	<div class="col-md-4">
 		<div class="well">
 			<p>Other</p>
 			<p><span class="stat" title="<?php echo $other_count; ?> trips"><?php echo $other; ?></span></p>
 		</div>
 	</div>
-	<div class="span4">
+	<div class="col-md-4">
 		<div class="well">
 			<p>KEEP CALM AND TRACK ON</p>
 		</div>

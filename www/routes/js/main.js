@@ -51,6 +51,7 @@ var Trips ={
 			this.config.lineOpacity = 0.05;
 			this.fetchTileMeta();
 		}
+		this.fetchNotes()
 	},
 	fetchTileMeta: function() {
 		$.ajax({
@@ -79,7 +80,7 @@ var Trips ={
 			type: 'GET',
 			data: {
 				t:'get_trip_ids'
-				}, 
+				},
 			dataType: 'json',
 			cache: true,
 			success: function(results) {
@@ -87,7 +88,7 @@ var Trips ={
 				for(var n in results){
 					self.countTrip(results[n]);
 		 			//self.fetchData(results[n].id);
-			 	}			 
+			 	}
 				self.trips = results;
 			}
 		});
@@ -101,7 +102,7 @@ var Trips ={
 			data: {
 				q:query,
 				t:'get_coords_by_trip'
-				}, 
+				},
 			dataType: 'json',
 			cache: true,
 			success: function(results) {
@@ -111,6 +112,25 @@ var Trips ={
 		});
 		return self.data;
 	},
+	fetchNotes: function() {
+		var self = Trips;
+		$.ajax({
+			url: 'noteData.php',
+			type: 'GET',
+			data: {
+				t:'get_notes'
+				},
+			dataType: 'json',
+			cache: true,
+			success: function(results) {
+				self.notes = results;
+				results.forEach(function (result) {
+					result.marker = self.generateMarker(result)
+				})
+			}
+		});
+		return self.notes;
+	},
 	attachPolyline: function() {
 		var latlng,
 			polyline,
@@ -118,7 +138,7 @@ var Trips ={
 			latlngs = [];
 
 		$(this.data).each(function() {
-			self = $(this)[0]; 
+			self = $(this)[0];
 			latlng = new L.LatLng(self.latitude,self.longitude);
 			latlngs.push(latlng);
 		});
@@ -132,6 +152,77 @@ var Trips ={
 		}
 		$('.trip_count').text(this.tripCount++);
 		$('.user_count').text(this.userCount);
+	},
+	generateMarker: function (note) {
+		var marker_location = new L.LatLng( note.latitude, note.longitude, note.altitude );
+
+		var note_source = [
+			{
+				icon_data: {icon: 'road', markerColor:'blue'},
+				title: "Pavement Issue"
+			},
+			{
+				icon_data: {icon: 'car', markerColor:'blue'},
+				title: "Traffic Signal"
+			},
+			{
+				icon_data: {icon: 'warning', markerColor:'blue'},
+				title: "Enforcement"
+			},
+			{
+				icon_data: {icon: 'frown-o', markerColor:'blue'},
+				title: "Rack Em Up - Future"
+			},
+			{
+				icon_data: {icon: 'truck', markerColor:'blue'},
+				title: "Bike Lane Issue"
+			},
+			{
+				icon_data: {icon: 'exclamation', markerColor:'beige'},
+				title: "Note This Issue"
+			},
+			{
+				icon_data: {icon: 'smile-o', markerColor:'blue'},
+				title: "Rack Em Up - Now"
+			},
+			{
+				icon_data: {icon: 'bicycle', markerColor:'green'},
+				title: "Bike Shop"
+			},
+			{
+				icon_data: {icon: 'users', markerColor:'blue'},
+				title: "Public Restroom"
+			},
+			{
+				icon_data: {icon: 'thumbs-o-up', markerColor:'blue'},
+				title: "Secret Passage"
+			},
+			{
+				icon_data: {icon: 'tint', markerColor:'blue'},
+				title: "Water Fountain"
+			},
+			{
+				icon_data: {icon: 'eye', markerColor:'blue'},
+				title: "Note This Asset"
+			}
+		]
+		note_data = note_source[note.note_type];
+
+		note_data.icon_data['prefix'] = 'fa'
+
+		var icon = L.AwesomeMarkers.icon(note_data.icon_data);
+		var marker = L.marker(marker_location, {icon: icon})
+		var popup_html = "<b>"+note_data.title+"</b>"
+		if(note.details != "")
+		{
+			popup_html += "<br>details: "+ note.details
+		}
+		if(note.image_url !== "")
+		{
+      popup_html += '<br><a href="image.php?name='+note.image_url+'" data-lightbox="image-'+note.id+'"><img src="image.php?name='+note.image_url+'&size=thumb" style="width: 200px"/></a>'
+		}
+		marker.bindPopup(popup_html)
+		return marker
 	}
 }
 
@@ -151,6 +242,61 @@ jQuery( '.btn.trips' ).button('toggle').on( 'click', function() {
 		tripTileLayer.setOpacity(1);
 	}
 } );
+
+jQuery( '.btn.notes' ).on( 'click', function() {
+	if ( $(this).hasClass( 'active' ) ) {
+		Trips.notes.forEach(function (note) {
+			map.removeLayer(note.marker)
+	})
+	} else {
+		Trips.notes.forEach(function (note) {
+			note.marker.addTo(map)
+	})
+	}
+} );
+
+jQuery( '.btn.parks' ).on( 'click', function() {
+	if ( $(this).hasClass( 'active' ) ) {
+		map.removeLayer(parks_layer)
+	} else {
+		parks_layer.addTo(map)
+	}
+} );
+
+var funParkMarker = {
+    radius: 8,
+    fillColor: "#2ca02c",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
+var parkMarker = {
+		radius: 5,
+		fillColor: "#2ca02c",
+		color: "#000",
+		weight: 1,
+		opacity: 1,
+		fillOpacity: 0.8
+};
+
+var parks_url = "js/parks.json"
+var parks_layer;
+jQuery.getJSON(parks_url, function(data) {
+	parks_layer = new L.GeoJSON (data, {
+    pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, feature.properties.Trails ? funParkMarker : parkMarker);
+    },
+		onEachFeature: function (feature, layer) {
+	  	var popup = "<b>"+feature.properties["Park Name"]+"</b>"
+			popup+= '<br>'+(feature.properties.Trails ? '<i class="fa fa-check-square-o"></i>':'No') +' Bike Trails'
+			popup+= '<br>'+(feature.properties["Drinking Fountain"] ? '<i class="fa fa-check-square-o"></i>':'No') +' Drinking Fountain'
+			popup += "<br>"+feature.properties.Description
+			layer.bindPopup(popup);
+		}
+	})
+})
 
 jQuery( '.btn.rtc' ).on( 'click', function() {
 	var rtc_url = "js/reno-improvements.json";
@@ -178,20 +324,28 @@ jQuery( '.btn.rtc' ).on( 'click', function() {
 				if ( !rtc_groups[feature.properties.Type] ) {
 					rtc_groups[feature.properties.Type] = new L.layerGroup();
 					rtc_groups[feature.properties.Type];
+					
+					//Create coloumn holder
 					$buttonGroup.append(
-						jQuery( '<button type="button" class="btn"></button>' )
-							.text( feature.properties.Type )
-							.data( { type: feature.properties.Type } )
-							.css( 'color', rtc_styles[feature.properties.Type].color )
-							.click( function() {
-								var $btn = jQuery( this );
-									$btn.toggleClass( 'active' );
-								if ( $btn.hasClass( 'active' ) ) {
-									map.addLayer( rtc_groups[feature.properties.Type] );
-								} else {
-									map.removeLayer( rtc_groups[feature.properties.Type] );
-								}
-							} )
+						this.$newColumn = $('<div class="col-xs-6"></div>')
+							.append(
+								//Append new button to column
+								$( '<button type="button" class="btn btn-default"></button>' )
+									.text( feature.properties.Type )
+									.data( { type: feature.properties.Type } )
+									.click( function() {
+										var $btn = jQuery( this );
+										$btn.toggleClass( 'active' );
+										if ( $btn.hasClass( 'active' ) ) {
+											map.addLayer( rtc_groups[feature.properties.Type] );
+										} else {
+											map.removeLayer( rtc_groups[feature.properties.Type] );
+										}; $(this).blur();
+									}),
+									$('<span class="col-xs-12"></span>')
+									.css( 'background-color', rtc_styles[feature.properties.Type].color )
+									.css( 'height', '5px')
+							)
 					);
 				}
 				rtc_groups[feature.properties.Type].addLayer( layer );
@@ -199,4 +353,3 @@ jQuery( '.btn.rtc' ).on( 'click', function() {
 		} );
 	});
 } ).click();
-
