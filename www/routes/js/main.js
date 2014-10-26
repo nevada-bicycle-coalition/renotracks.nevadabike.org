@@ -340,7 +340,7 @@ jQuery( '.btn.rtc' ).on( 'click', function() {
 											map.addLayer( rtc_groups[feature.properties.Type] );
 										} else {
 											map.removeLayer( rtc_groups[feature.properties.Type] );
-										}
+										}; $(this).blur();
 									}),
 									$('<span class="col-xs-12"></span>')
 									.css( 'background-color', rtc_styles[feature.properties.Type].color )

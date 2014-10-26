@@ -127,6 +127,10 @@ $config_json = json_encode( $config );
 				$(this).css('display','inline');
 			});
 		})
+		
+		$(".btn").mouseup(function(){
+			$(this).blur();
+		})
 	})();
 	
 	
