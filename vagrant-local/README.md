@@ -8,10 +8,11 @@ $ vagrant up
 
 Run that in the same directory as this file.
 
-We have an issue where varnish doesn't install on the first try, sigh. Reprovision:
+Ignore a few red lines of output:
 
 ```
-$ vagrant provision
+==> default: stdin: is not a tty
+==> default: dpkg-preconfigure: unable to re-open stdin: No such file or directory
 ```
 
 You can get a shell on the VM:
