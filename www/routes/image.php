@@ -1,17 +1,15 @@
 <?php
 
-$root_dir = dirname( dirname( __dir__ ) );
-
 if ( isset( $_GET['name'] ) ) {
 	$name = preg_replace( '/[^A-Za-z0-9-_]/', '', $_GET['name'] );
-	$file = $root_dir . '/uploads/' . $name . '.jpg';
+	$file = getenv( 'RT_UPLOAD_DIR' ) . '/' . $name . '.jpg';
 
 	if ( isset( $_GET['size'] ) and 'thumb' == $_GET['size']  ) {
 		$file = thumb( $file );
 	}
 
 } else {
-	$file = $root_dir . '/www/images/reno_web.png';
+	$file = dirname( dirname( __DIR__ ) ) . '/www/images/reno_web.png';
 }
 
 // open the file in a binary mode
