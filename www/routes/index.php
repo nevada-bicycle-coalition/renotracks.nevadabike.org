@@ -78,12 +78,12 @@ $config_json = json_encode( $config );
 	</div>
 	<div id="sidebar_content" class="collapse in">
 		<div class="section map-controls">
-			<button type="button" data-toggle="button" class="btn trips">Trips</button>
-			<button type="button" data-toggle="button" class="btn streets">Streets</button>
+			<div class="col-xs-6"><button type="button" data-toggle="button" class="btn btn-default trips">Trips</button></div>
+			<div class="col-xs-6"><button type="button" data-toggle="button" class="btn btn-default streets">Streets</button></div>
 			<br/>
 			<button type="button" class="btn rtc">Bike Lanes and More</button>
 		</div>
-		<div class="section info">
+		<div class="col-xs-12 info">
 			<p>Visualizing <span class="trip_count">m</span> trips and
 				<span class="coordinate_count">n</span> collected data points.
 			</p>

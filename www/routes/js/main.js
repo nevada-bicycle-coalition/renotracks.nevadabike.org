@@ -178,20 +178,28 @@ jQuery( '.btn.rtc' ).on( 'click', function() {
 				if ( !rtc_groups[feature.properties.Type] ) {
 					rtc_groups[feature.properties.Type] = new L.layerGroup();
 					rtc_groups[feature.properties.Type];
+					
+					//Create coloumn holder
 					$buttonGroup.append(
-						jQuery( '<button type="button" class="btn"></button>' )
-							.text( feature.properties.Type )
-							.data( { type: feature.properties.Type } )
-							.css( 'color', rtc_styles[feature.properties.Type].color )
-							.click( function() {
-								var $btn = jQuery( this );
-									$btn.toggleClass( 'active' );
-								if ( $btn.hasClass( 'active' ) ) {
-									map.addLayer( rtc_groups[feature.properties.Type] );
-								} else {
-									map.removeLayer( rtc_groups[feature.properties.Type] );
-								}
-							} )
+						this.$newColumn = $('<div class="col-xs-6"></div>')
+							.append(
+								//Append new button to column
+								$( '<button type="button" class="btn btn-default"></button>' )
+									.text( feature.properties.Type )
+									.data( { type: feature.properties.Type } )
+									.click( function() {
+										var $btn = jQuery( this );
+										$btn.toggleClass( 'active' );
+										if ( $btn.hasClass( 'active' ) ) {
+											map.addLayer( rtc_groups[feature.properties.Type] );
+										} else {
+											map.removeLayer( rtc_groups[feature.properties.Type] );
+										}
+									}),
+									$('<span class="col-xs-12"></span>')
+									.css( 'background-color', rtc_styles[feature.properties.Type].color )
+									.css( 'height', '5px')
+							)
 					);
 				}
 				rtc_groups[feature.properties.Type].addLayer( layer );
