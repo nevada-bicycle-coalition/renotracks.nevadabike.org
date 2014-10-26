@@ -23,7 +23,7 @@ $config_json = json_encode( $config );
 
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"/>
-	<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+	<!--<link rel="stylesheet" href="css/bootstrap-responsive.min.css">-->
 	<link rel="stylesheet" href="css/main.css">
 
 	<script type="text/javascript">
@@ -50,30 +50,34 @@ $config_json = json_encode( $config );
 
 <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
 
-<div class="navbar navbar-inverse navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="container">
-
-			<span class="brand">RenoTracks</span>
-
-			<ul class="nav">
+<nav class="navbar navbar-inverse" role="navigation">
+	<div class="container-fluid">
+		<div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#">RenoTracks</a>
+	    </div>
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		    <ul class="nav navbar-nav">
 				<li><a href="/">Home</a></li>
 				<li class="active"><a href=".">Map</a></li>
-				<li class="tally.php"><a href="tally.php">Tallies</a></li>
+				<li><a href="tally.php">Tallies</a></li>
 			</ul>
-
-		</div>
+	    </div>
 	</div>
-</div>
-
-<div id="sidebar">
-	<div class="section">
-		<div class="title">
-			 <a href="#sidebar_content" data-toggle="collapse">Map Options</a>
-		</div>
+</nav>
+<div class="sidebar-container">
+	<div class="sidebar map-options" data-spy="affix">
+	<div class="section option-header" data-toggle="collapse" data-target="#sidebar_content">
+		<span class="glyphicon glyphicon-cog"></span>
+		<span class="title">Map Options</span>
 	</div>
 	<div id="sidebar_content" class="collapse in">
-		<div id="map_controls" class="section">
+		<div class="section map-controls">
 			<button type="button" data-toggle="button" class="btn trips">Trips</button>
 			<button type="button" data-toggle="button" class="btn streets">Streets</button>
 			<br/>
@@ -86,7 +90,9 @@ $config_json = json_encode( $config );
 		</div>
 	</div>
 </div>
-<div class="row-fluid">
+</div>
+
+<div class="row-fluid map-container">
 	<div class="span12">
 		<div id="mapBody"></div>
 	</div>
@@ -105,7 +111,19 @@ $config_json = json_encode( $config );
 <script type="text/javascript">
 	(function () {
 		Trips.init( <?php echo $config_json; ?> );
+		
+		$('#sidebar_content').on('hide.bs.collapse', function () {
+			$('.sidebar .title').slideToggle();
+		})
+		
+		$('#sidebar_content').on('show.bs.collapse', function () {
+			$('.sidebar .title').slideToggle(function() {
+				$(this).css('display','inline');
+			});
+		})
 	})();
+	
+	
 </script>
 </body>
 </html>

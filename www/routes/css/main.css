@@ -1,10 +1,52 @@
 @media (min-width: 980px) {
-	body {
-		padding-top: 40px;
-	}
+	
 }
-.navbar-fixed-top{
-	margin:0;
+.navbar {
+	border-radius: 0;
+	margin-bottom: 0;
+	z-index: 1000;
+}
+.section {
+	padding: 20px;
+}
+.map-options .icon-bar {
+	background-color: #000;
+	float: left;
+	display: block;
+	width: 22px;
+	height: 2px;
+	border-radius: 1px;
+}
+.map-options .options-header {
+	cursor: pointer;
+}
+.sidebar-container {
+	
+}
+
+.sidebar {
+	position: absolute;
+	top: 80px;
+	left: 30px;
+	max-width: 300px;
+	background-color: white;
+	z-index: 10;
+}
+
+.sidebar .info {
+	background: #f5f5f5;
+}
+
+.sidebar .title {
+	font-size: 20px;
+}
+
+.sidebar button.btn {
+	width: 45%;
+	margin: 2px 5px;
+}
+.sidebar button.btn:first-child {
+	margin-right:0;
 }
 #mapBody {
 	width: 100%;
@@ -13,43 +55,13 @@
 	background-color: #fff;
 }
 
-#sidebar {
-	margin: 30px;
-	position: absolute;
-	left: 0;
-	width: 300px;
-	background-color: white;
-	z-index: 10000;
+.map-container {
+	
 }
-
-#sidebar .section {
-	padding: 20px;
-}
-
-#sidebar .info {
-	background: #f5f5f5;
-}
-
-#sidebar .title {
-	font-size: 20px;
-	text-align: center;
-}
-
-#sidebar button.btn {
-	width: 45%;
-	margin: 2px 5px;
-}
-#sidebar button.btn:first-child {
-	margin-right:0;
-}
-
-@media (max-width: 699px) {
-	#sidebar {
-		position: static !important;
-		top: 0 !important;
-		left: 0;
-		margin: 0;
-		width: auto !important;
+@media (max-width: 400px) {
+	.sidebar {
+		left: 5%;
+		max-width: 90%;
 	}
 }
 
