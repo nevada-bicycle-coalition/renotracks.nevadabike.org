@@ -26,6 +26,7 @@ $config_json = json_encode( $config );
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"/>
 	<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
 	<link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+	<link rel="stylesheet" href="css/lightbox.css"/>
 	<link rel="stylesheet" href="css/main.css">
 
 	<script type="text/javascript">
@@ -101,6 +102,7 @@ $config_json = json_encode( $config );
 <script>window.jQuery || document.write( '<script src="js/vendor/jquery-1.8.3.min.js"><\/script>' )</script>
 <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
 
+<script src="js/vendor/lightbox.min.js"></script>
 <script src="js/vendor/bootstrap.min.js"></script>
 <script src="js/vendor/leaflet.awesome-markers.js"></script>
 

@@ -80,7 +80,7 @@ var Trips ={
 			type: 'GET',
 			data: {
 				t:'get_trip_ids'
-				}, 
+				},
 			dataType: 'json',
 			cache: true,
 			success: function(results) {
@@ -88,7 +88,7 @@ var Trips ={
 				for(var n in results){
 					self.countTrip(results[n]);
 		 			//self.fetchData(results[n].id);
-			 	}			 
+			 	}
 				self.trips = results;
 			}
 		});
@@ -102,7 +102,7 @@ var Trips ={
 			data: {
 				q:query,
 				t:'get_coords_by_trip'
-				}, 
+				},
 			dataType: 'json',
 			cache: true,
 			success: function(results) {
@@ -127,8 +127,6 @@ var Trips ={
 				results.forEach(function (result) {
 					result.marker = self.generateMarker(result)
 				})
-
-
 			}
 		});
 		return self.notes;
@@ -140,7 +138,7 @@ var Trips ={
 			latlngs = [];
 
 		$(this.data).each(function() {
-			self = $(this)[0]; 
+			self = $(this)[0];
 			latlng = new L.LatLng(self.latitude,self.longitude);
 			latlngs.push(latlng);
 		});
@@ -198,7 +196,7 @@ var Trips ={
 				break;
 		case '6': //Rack Em Up - now
 				icon_data = {icon: 'smile-o', markerColor: 'blue'}
-				note["title"] = "Rack Em up - Now"
+				note["title"] = "Rack Em Up - Now"
 				break;
 		case '7': //Bike Lane Issue
 				icon_data = {icon: 'bicycle', markerColor: 'green'}
@@ -237,7 +235,7 @@ var Trips ={
 		}
 		if(note.image_url !== "")
 		{
-      popup_html += '<br><img src="image.php?name='+note.image_url+'" style="width: 200px"/>'
+      popup_html += '<br><a href="image.php?name='+note.image_url+'" data-lightbox="image-'+note.id+'"><img src="image.php?name='+note.image_url+'" style="width: 200px"/></a>'
 		}
 		marker.bindPopup(popup_html)
 		return marker
@@ -320,4 +318,3 @@ jQuery( '.btn.rtc' ).on( 'click', function() {
 		} );
 	});
 } ).click();
-
