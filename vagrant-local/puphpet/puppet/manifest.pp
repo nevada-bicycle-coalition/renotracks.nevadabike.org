@@ -1418,6 +1418,10 @@ file {'/etc/varnish':
     ensure => directory
 }
 
+file { "${nginx::params::nx_conf_dir}/conf.d/default.conf":
+    ensure => absent,
+}
+
 class {'varnish':
   varnish_listen_port => '80',
   varnish_storage_size => '64M',
