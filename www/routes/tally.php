@@ -60,7 +60,6 @@ $other_count = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after,
 
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"/>
-	<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
 	<link rel="stylesheet" href="css/main.css">
 
 </head>
@@ -73,21 +72,26 @@ $other_count = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after,
 
 <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
 
-<div class="navbar navbar-inverse navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="container">
-
-			<span class="brand">RenoTracks</span>
-
-			<ul class="nav">
+<nav class="navbar navbar-inverse" role="navigation">
+	<div class="container-fluid">
+		<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">RenoTracks</a>
+			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
 				<li><a href="/">Home</a></li>
-				<li><a href="/routes/">Map</a></li>
-				<li class="active"><a href=".">Tallies</a></li>
+				<li><a href=".">Map</a></li>
+				<li class="active"><a href="tally.php">Tallies</a></li>
 			</ul>
-
-		</div>
+			</div>
 	</div>
-</div>
+</nav>
 
 <section class="masthead">
 	<div class="container">
