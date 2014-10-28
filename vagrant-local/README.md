@@ -31,10 +31,6 @@ Add an entry to your [hosts file][1] to reach the web server
 
 Now http://renotracks.dev should serve up the app. 
 
-If you get a 502 Gateway error, it's probably this issue:
-
-http://stackoverflow.com/questions/23443398/nginx-error-connect-to-php5-fpm-sock-failed-13-permission-denied
-
 When finished
 
 ```
