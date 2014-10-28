@@ -532,11 +532,13 @@ if hash_key_equals($nginx_values, 'install', 1) {
     }
 
     exec { "';listen.group = www-data' => 'listen.group = www-data'":
-      command => "perl -p -i -e 's#;listen.(owner|group)#listen.\1#gi' /etc/php5/fpm/pool.d/www.conf",
+      command => "perl -p -i -e 's#;listen.(owner|group)#listen.\\1#gi' /etc/php5/fpm/pool.d/www.conf",
       unless  => "grep -c '^listen.group = www-data' '/etc/php5/fpm/pool.d/www.conf'",
       notify  => [
         Class['nginx::service'],
+          Service['php5-fpm']
       ],
+      require => [ Class['php'] ],
     }
 
   } elsif hash_key_equals($hhvm_values, 'install', 1) {
