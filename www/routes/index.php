@@ -74,10 +74,10 @@ $config_json = json_encode( $config );
 </nav>
 <div class="sidebar-container">
 	<div class="sidebar map-options" data-spy="affix">
-	<div class="section option-header" data-toggle="collapse" data-target="#sidebar_content">
+	<a class="section option-header" data-toggle="collapse" data-target="#sidebar_content" href="#sidebar_content">
 		<span class="glyphicon glyphicon-cog"></span>
 		<span class="title">Map Options</span>
-	</div>
+	</a>
 	<div id="sidebar_content" class="collapse in">
 		<div class="section map-controls">
 			<div class="col-xs-6"><button type="button" data-toggle="button" class="btn btn-default trips">Trips</button></div>
