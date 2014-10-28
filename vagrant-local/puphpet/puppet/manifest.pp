@@ -528,7 +528,17 @@ if hash_key_equals($nginx_values, 'install', 1) {
         ],
         require => Exec["create ${php5_fpm_sock} file"]
       }
+
     }
+
+    exec { "';listen.group = www-data' => 'listen.group = www-data'":
+      command => "perl -p -i -e 's#;listen.(owner|group)#listen.\1#gi' /etc/php5/fpm/pool.d/www.conf",
+      unless  => "grep -c '^listen.group = www-data' '/etc/php5/fpm/pool.d/www.conf'",
+      notify  => [
+        Class['nginx::service'],
+      ],
+    }
+
   } elsif hash_key_equals($hhvm_values, 'install', 1) {
     $fastcgi_pass        = '127.0.0.1:9000'
     $fastcgi_param_parts = [
