@@ -286,12 +286,12 @@ var parks_layer;
 jQuery.getJSON(parks_url, function(data) {
 	parks_layer = new L.GeoJSON (data, {
     pointToLayer: function (feature, latlng) {
-        return L.circleMarker(latlng, feature.properties.Trails ? funParkMarker : parkMarker);
+        return L.circleMarker(latlng, feature.properties.Trails == 'Yes' ? funParkMarker : parkMarker);
     },
 		onEachFeature: function (feature, layer) {
 	  	var popup = "<b>"+feature.properties["Park Name"]+"</b>"
-			popup+= '<br>'+(feature.properties.Trails ? '<i class="fa fa-check-square-o"></i>':'No') +' Bike Trails'
-			popup+= '<br>'+(feature.properties["Drinking Fountain"] ? '<i class="fa fa-check-square-o"></i>':'No') +' Drinking Fountain'
+			popup+= '<br>'+(feature.properties.Trails == 'Yes' ? '<i class="fa fa-check-square-o"></i>':'No') +' Bike Trails'
+			popup+= '<br>'+(feature.properties["Drinking Fountain"] == 'Yes' ? '<i class="fa fa-check-square-o"></i>':'No') +' Drinking Fountain'
 			popup += "<br>"+feature.properties.Description
 			layer.bindPopup(popup);
 		}
