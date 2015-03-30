@@ -173,6 +173,9 @@ drush:
         drush.tag_branch: 6.x
 mysql:
     install: '1'
+    override_options:
+        mysqld:
+            max_allowed_packet: '128M'
     root_password: root
     phpmyadmin: 0
     adminer: 0
