@@ -1458,6 +1458,8 @@ exec {'wp-cli':
 }
 
 # Begin swap
-
-include swap_file
+#
+swap_file::files { 'default':
+  ensure   => present,
+}
 
