@@ -1,8 +1,9 @@
 <?php
 set_include_path( dirname( dirname( dirname( __FILE__ ) ) ) . '/include' . PATH_SEPARATOR . get_include_path() );
 include_once('TripFactory.php');
-$after = null;
-$before = null;
+$after = '2015-05-09 00:00:00 PST'; // Set to null for all-time
+$before = '2015-05-15 11:59:59 PST'; // Set to null for all-time
+$heading = 'Miles tracked for Bike Week 2015'; // Miles tracked by RenoTracks for all-time
 
 $total = TripFactory::getTripMileage( $after, $before );
 $total_count = TripFactory::getTripCount( $after, $before );
@@ -95,7 +96,7 @@ $other_count = TripFactory::getTripCountByAttribute( 'purpose', 'Other', $after,
 
 <section class="masthead">
 	<div class="container">
-		<h1>Miles tracked by RenoTracks</h1>
+		<h1><?php echo $heading; ?></h1>
 	</div>
 </section>
 
