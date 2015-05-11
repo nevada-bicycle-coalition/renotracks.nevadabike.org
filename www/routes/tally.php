@@ -2,7 +2,7 @@
 set_include_path( dirname( dirname( dirname( __FILE__ ) ) ) . '/include' . PATH_SEPARATOR . get_include_path() );
 include_once('TripFactory.php');
 $after = '2015-05-09'; // Set to null for all-time
-$before = '2015-05-15'; // Set to null for all-time
+$before = '2015-05-16'; // Set to null for all-time
 $heading = 'Miles tracked for Bike Week 2015'; // Miles tracked by RenoTracks for all-time
 
 $total = TripFactory::getTripMileage( $after, $before );
